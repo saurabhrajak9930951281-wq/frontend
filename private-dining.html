@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Private dining rooms at Ristorante Imperiale, Mumbai — for celebrations, corporate events, and intimate occasions. Reserve the Sala Imperiale or the Chef's Table.">
+<title>Private Dining — Ristorante Imperiale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ─── PRIVATE DINING PAGE ─── */
+
+  /* Hero */
+  .pd-hero {
+    position: relative; height: 70vh; min-height: 520px;
+    display: flex; align-items: flex-end; padding: 0 5vw 6rem;
+    overflow: hidden;
+  }
+  .pd-hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1920&q=80');
+    background-size: cover; background-position: center 45%;
+    animation: heroZoom 10s ease-out forwards;
+  }
+  .pd-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(8,8,7,0.95) 0%,
+      rgba(8,8,7,0.5) 55%,
+      rgba(8,8,7,0.15) 100%
+    );
+  }
+  .pd-hero-content { position: relative; z-index: 2; max-width: 720px; }
+  .pd-hero-eyebrow {
+    font-family: var(--font-elegant); font-size: 0.85rem;
+    letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--gold); font-style: italic; margin-bottom: 0.8rem;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.3s;
+  }
+  .pd-hero-title {
+    font-family: var(--font-serif); font-size: clamp(2.5rem, 5.5vw, 4.8rem);
+    font-weight: 400; letter-spacing: 0.07em; color: var(--ivory);
+    line-height: 1.08; margin-bottom: 1.2rem;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.55s;
+  }
+  .pd-hero-title em {
+    font-style: italic; color: var(--gold);
+    font-family: var(--font-elegant); font-size: 1.12em;
+  }
+  .pd-hero-lead {
+    font-family: var(--font-elegant); font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+    font-weight: 300; font-style: italic; color: rgba(244,237,224,0.7);
+    line-height: 1.75; max-width: 560px;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.75s;
+  }
+
+  /* ── Occasions Strip ── */
+  .occasions-strip {
+    background: var(--charcoal);
+    padding: 0;
+    overflow: hidden;
+  }
+  .occasions-scroll {
+    display: flex;
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+  }
+  .occasion-item {
+    flex: 1; min-width: 0;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    border-right: 1px solid rgba(201,168,76,0.12);
+    position: relative; overflow: hidden;
+    transition: background var(--transition-f);
+  }
+  .occasion-item:last-child { border-right: none; }
+  .occasion-item::before {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(201,168,76,0.04);
+    transform: scaleY(0); transform-origin: bottom;
+    transition: transform var(--transition-f);
+  }
+  .occasion-item:hover::before { transform: scaleY(1); }
+  .occasion-icon {
+    font-family: var(--font-elegant); font-size: 1.6rem;
+    color: var(--gold); display: block; margin-bottom: 0.6rem;
+    font-style: italic; line-height: 1;
+  }
+  .occasion-name {
+    font-family: var(--font-serif); font-size: 0.65rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(244,237,224,0.7);
+    display: block;
+  }
+
+  /* ── Room Tabs ── */
+  #rooms { background: var(--black); padding: 7rem 5vw; }
+  .rooms-header { text-align: center; margin-bottom: 4rem; }
+  .room-tabs {
+    display: flex; justify-content: center; gap: 0;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    margin-bottom: 5rem;
+  }
+  .room-tab {
+    font-family: var(--font-serif); font-size: 0.68rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: rgba(244,237,224,0.5);
+    padding: 1rem 2.5rem; cursor: pointer; background: transparent;
+    border: none; border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color var(--transition-f), border-color var(--transition-f);
+  }
+  .room-tab:hover { color: var(--gold); }
+  .room-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .room-pane { display: none; }
+  .room-pane.active { display: block; }
+
+  .room-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: start; max-width: 1200px; margin: 0 auto;
+  }
+  .room-images { position: relative; }
+  .room-main-image {
+    aspect-ratio: 4/3; overflow: hidden; margin-bottom: 1rem;
+  }
+  .room-main-image img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(0.85);
+    transition: transform 0.8s ease, filter 0.5s ease;
+  }
+  .room-main-image:hover img { transform: scale(1.04); filter: brightness(0.95); }
+  .room-thumbnails {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem;
+  }
+  .room-thumb {
+    aspect-ratio: 4/3; overflow: hidden; cursor: pointer;
+    opacity: 0.6; transition: opacity var(--transition-f);
+  }
+  .room-thumb:hover, .room-thumb.active { opacity: 1; }
+  .room-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  .room-info { padding: 1rem 0; }
+  .room-title {
+    font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 400; letter-spacing: 0.06em; color: var(--ivory);
+    margin-bottom: 0.4rem;
+  }
+  .room-subtitle {
+    font-family: var(--font-elegant); font-size: 1rem; font-style: italic;
+    color: var(--gold); letter-spacing: 0.06em; margin-bottom: 1.5rem;
+  }
+  .room-desc {
+    font-size: 0.9rem; color: rgba(244,237,224,0.65);
+    line-height: 1.9; margin-bottom: 1.8rem;
+  }
+  .room-specs {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: rgba(201,168,76,0.15);
+    margin-bottom: 2rem;
+  }
+  .room-spec {
+    background: var(--black); padding: 1.2rem;
+    text-align: center;
+  }
+  .room-spec-num {
+    font-family: var(--font-serif); font-size: 1.6rem; font-weight: 400;
+    color: var(--gold); display: block; line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .room-spec-label {
+    font-family: var(--font-serif); font-size: 0.55rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(244,237,224,0.4);
+  }
+  .room-features { list-style: none; margin-bottom: 2rem; }
+  .room-features li {
+    font-size: 0.85rem; color: rgba(244,237,224,0.65);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.07);
+    display: flex; align-items: center; gap: 0.8rem;
+    font-family: var(--font-elegant); font-style: italic;
+  }
+  .room-features li::before {
+    content: ''; display: block;
+    width: 14px; height: 1px; background: var(--gold); flex-shrink: 0;
+  }
+
+  /* ── Testimonials ── */
+  #testimonials {
+    background: var(--charcoal);
+    padding: 7rem 5vw;
+  }
+  .testimonials-header { text-align: center; margin-bottom: 4rem; }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; background: rgba(201,168,76,0.1);
+    max-width: 1200px; margin: 0 auto;
+  }
+  .testimonial-card {
+    background: var(--charcoal);
+    padding: 3rem 2.5rem;
+    transition: background var(--transition-f);
+  }
+  .testimonial-card:hover { background: var(--mid); }
+  .testimonial-stars {
+    display: flex; gap: 4px; margin-bottom: 1.5rem;
+  }
+  .testimonial-stars span {
+    color: var(--gold); font-size: 0.75rem;
+  }
+  .testimonial-quote {
+    font-family: var(--font-elegant); font-size: 1rem; font-weight: 300;
+    font-style: italic; color: rgba(244,237,224,0.75);
+    line-height: 1.8; margin-bottom: 1.8rem;
+    position: relative;
+  }
+  .testimonial-quote::before {
+    content: '\201C';
+    font-family: var(--font-elegant); font-size: 4rem;
+    color: rgba(201,168,76,0.2); position: absolute;
+    top: -1rem; left: -0.5rem; line-height: 1;
+    pointer-events: none;
+  }
+  .testimonial-author {
+    font-family: var(--font-serif); font-size: 0.62rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .testimonial-occasion {
+    font-family: var(--font-elegant); font-size: 0.8rem;
+    font-style: italic; color: rgba(244,237,224,0.35);
+    margin-top: 0.25rem;
+  }
+
+  /* ── Enquiry Form ── */
+  #enquiry {
+    background: var(--black);
+    padding: 7rem 5vw;
+  }
+  .enquiry-inner {
+    display: grid; grid-template-columns: 1fr 1.5fr;
+    gap: 8rem; max-width: 1200px; margin: 0 auto; align-items: start;
+  }
+  .enquiry-info { padding-top: 1rem; }
+  .enquiry-detail {
+    margin-top: 2.5rem; padding: 2rem;
+    border: 1px solid rgba(201,168,76,0.12);
+    background: rgba(201,168,76,0.02);
+  }
+  .enquiry-detail-title {
+    font-family: var(--font-serif); font-size: 0.6rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+  }
+  .enquiry-detail-item {
+    display: flex; justify-content: space-between;
+    font-size: 0.83rem; padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.07);
+    color: rgba(244,237,224,0.6);
+  }
+  .enquiry-detail-item:last-child { border-bottom: none; }
+  .enquiry-detail-item span:first-child { color: rgba(244,237,224,0.4); font-family: var(--font-elegant); font-style: italic; }
+  .enquiry-detail-item span:last-child { color: rgba(244,237,224,0.7); font-family: var(--font-serif); font-size: 0.75rem; letter-spacing: 0.06em; }
+
+  .enquiry-form-wrap { padding-top: 1rem; }
+  .enquiry-form-title {
+    font-family: var(--font-serif); font-size: 1.4rem; font-weight: 400;
+    letter-spacing: 0.08em; color: var(--ivory); margin-bottom: 0.5rem;
+  }
+  .enquiry-form-sub {
+    font-family: var(--font-elegant); font-size: 0.9rem; font-style: italic;
+    color: rgba(244,237,224,0.5); margin-bottom: 2.5rem;
+  }
+  .enquiry-form-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .enquiry-form-grid .form-group.full { grid-column: span 2; }
+  .enquiry-textarea {
+    background: transparent; border: none;
+    border-bottom: 1px solid rgba(244,237,224,0.2);
+    color: var(--ivory); font-family: var(--font-sans);
+    font-size: 0.88rem; font-weight: 300;
+    padding: 0.75rem 0; outline: none; width: 100%; resize: none;
+    transition: border-color var(--transition-f);
+    min-height: 80px;
+  }
+  .enquiry-textarea:focus { border-bottom-color: var(--gold); }
+  .enquiry-textarea::placeholder { color: rgba(244,237,224,0.3); }
+  .enquiry-submit {
+    margin-top: 2rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+  }
+  .btn-enquire {
+    font-family: var(--font-serif); font-size: 0.68rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--black); background: var(--gold);
+    border: none; padding: 18px 48px; cursor: pointer;
+    transition: background var(--transition-f), transform var(--transition-f), box-shadow var(--transition-f);
+  }
+  .btn-enquire:hover {
+    background: var(--gold-light); transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(201,168,76,0.4);
+  }
+  .enquiry-promise {
+    font-family: var(--font-elegant); font-size: 0.82rem; font-style: italic;
+    color: rgba(244,237,224,0.4);
+  }
+
+  /* ── Packages ── */
+  #packages {
+    background: var(--charcoal);
+    padding: 7rem 5vw;
+    overflow: hidden;
+  }
+  .packages-header { text-align: center; margin-bottom: 4rem; }
+  .packages-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 2px; background: rgba(201,168,76,0.1);
+    max-width: 1000px; margin: 0 auto;
+  }
+  .package-card {
+    background: var(--charcoal); padding: 3.5rem 3rem;
+    position: relative; overflow: hidden;
+    transition: background var(--transition-f);
+  }
+  .package-card:hover { background: var(--mid); }
+  .package-card::after {
+    content: attr(data-number);
+    position: absolute; right: 2rem; bottom: 1rem;
+    font-family: var(--font-serif); font-size: 6rem; font-weight: 700;
+    color: rgba(201,168,76,0.05); line-height: 1; pointer-events: none;
+    letter-spacing: 0.05em;
+  }
+  .package-icon {
+    font-family: var(--font-elegant); font-size: 1.8rem; color: var(--gold);
+    font-style: italic; display: block; margin-bottom: 1rem;
+  }
+  .package-name {
+    font-family: var(--font-serif); font-size: 1.1rem; font-weight: 400;
+    letter-spacing: 0.1em; color: var(--ivory); margin-bottom: 0.5rem;
+  }
+  .package-subtitle {
+    font-family: var(--font-elegant); font-size: 0.85rem; font-style: italic;
+    color: var(--gold); margin-bottom: 1.5rem;
+  }
+  .package-desc {
+    font-size: 0.85rem; color: rgba(244,237,224,0.55);
+    line-height: 1.85; font-family: var(--font-elegant); font-style: italic;
+    margin-bottom: 1.5rem; position: relative; z-index: 1;
+  }
+  .package-price {
+    font-family: var(--font-serif); font-size: 0.7rem; letter-spacing: 0.15em;
+    color: rgba(201,168,76,0.7); position: relative; z-index: 1;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .room-grid, .enquiry-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .testimonials-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+    .packages-grid { grid-template-columns: 1fr; max-width: 500px; }
+  }
+  @media (max-width: 768px) {
+    .occasions-scroll { flex-wrap: wrap; }
+    .occasion-item { flex: 1 1 50%; border-right: none; border-bottom: 1px solid rgba(201,168,76,0.12); }
+    .enquiry-form-grid { grid-template-columns: 1fr; }
+    .enquiry-form-grid .form-group.full { grid-column: span 1; }
+    .room-specs { grid-template-columns: repeat(3, 1fr); }
+    .room-tabs { flex-wrap: wrap; }
+    .room-tab { padding: 0.75rem 1.2rem; font-size: 0.62rem; }
+  }
+  @media (max-width: 480px) {
+    .occasions-scroll { flex-direction: column; }
+    .occasion-item { border-right: none; }
+    .room-thumbnails { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─── -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <a href="ristorante-imperiale.html" class="nav-logo" aria-label="Ristorante Imperiale — Home">
+    <span class="nav-logo-main">Ristorante Imperiale</span>
+    <span class="nav-logo-sub">Mumbai &middot; Dal 1998</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="ristorante-imperiale.html#about">About</a></li>
+    <li><a href="ristorante-imperiale.html#menu">Menu</a></li>
+    <li><a href="tasting-menu.html">Tasting Menu</a></li>
+    <li><a href="private-dining.html" class="active">Private Dining</a></li>
+    <li><a href="ristorante-imperiale.html#contact">Contact</a></li>
+  </ul>
+  <a href="#enquiry" class="nav-cta">Enquire</a>
+  <button class="nav-burger" id="burger-btn" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div id="mobile-menu" aria-hidden="true">
+  <a href="ristorante-imperiale.html#about">About</a>
+  <a href="ristorante-imperiale.html#menu">À La Carte</a>
+  <a href="tasting-menu.html">Tasting Menu</a>
+  <a href="private-dining.html">Private Dining</a>
+  <a href="ristorante-imperiale.html#reservations">Reservations</a>
+  <a href="ristorante-imperiale.html#contact">Contact</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section class="pd-hero" aria-label="Private Dining hero">
+  <div class="pd-hero-bg" role="img" aria-label="Elegant private dining room at Ristorante Imperiale"></div>
+  <div class="pd-hero-overlay"></div>
+  <div class="pd-hero-content">
+    <p class="pd-hero-eyebrow">Exclusively Yours</p>
+    <h1 class="pd-hero-title">Private <em>Dining</em><br>&amp; Events</h1>
+    <p class="pd-hero-lead">
+      Three intimate spaces — each conceived for a different kind of celebration. From a dinner for two at the Chef's Table to a gathering of forty in the Sala Grande.
+    </p>
+  </div>
+</section>
+
+<!-- ─── OCCASIONS ─── -->
+<div class="occasions-strip" role="complementary" aria-label="Types of occasions we host">
+  <div class="occasions-scroll">
+    <div class="occasion-item reveal">
+      <span class="occasion-icon">♡</span>
+      <span class="occasion-name">Proposals</span>
+    </div>
+    <div class="occasion-item reveal">
+      <span class="occasion-icon">◇</span>
+      <span class="occasion-name">Anniversaries</span>
+    </div>
+    <div class="occasion-item reveal">
+      <span class="occasion-icon">✦</span>
+      <span class="occasion-name">Birthdays</span>
+    </div>
+    <div class="occasion-item reveal">
+      <span class="occasion-icon">∞</span>
+      <span class="occasion-name">Weddings</span>
+    </div>
+    <div class="occasion-item reveal">
+      <span class="occasion-icon">≋</span>
+      <span class="occasion-name">Corporate</span>
+    </div>
+    <div class="occasion-item reveal">
+      <span class="occasion-icon">◯</span>
+      <span class="occasion-name">Wine Dinners</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── ROOMS ─── -->
+<section id="rooms" aria-labelledby="rooms-title">
+  <div class="rooms-header">
+    <p class="section-label center reveal">Our Spaces</p>
+    <h2 class="section-title reveal" id="rooms-title">Three Rooms,<br>Infinite <em>Occasions</em></h2>
+  </div>
+
+  <div class="room-tabs reveal" role="tablist" aria-label="Private dining room selection">
+    <button class="room-tab active" data-room="sala-imperiale" role="tab" aria-selected="true">Sala Imperiale</button>
+    <button class="room-tab" data-room="sala-toscana" role="tab" aria-selected="false">Sala Toscana</button>
+    <button class="room-tab" data-room="chefs-table" role="tab" aria-selected="false">Chef's Table</button>
+  </div>
+
+  <!-- SALA IMPERIALE -->
+  <div class="room-pane active" id="sala-imperiale" role="tabpanel">
+    <div class="room-grid">
+      <div class="room-images reveal-left">
+        <div class="room-main-image" id="si-main">
+          <img
+            src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=900&q=80"
+            alt="Sala Imperiale — grand private dining room"
+            loading="lazy"
+            id="si-main-img"
+          >
+        </div>
+        <div class="room-thumbnails">
+          <div class="room-thumb active" tabindex="0" aria-label="View dining room">
+            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=300&q=70" alt="" loading="lazy">
+          </div>
+          <div class="room-thumb" tabindex="0" aria-label="View table setting">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&q=70" alt="" loading="lazy">
+          </div>
+          <div class="room-thumb" tabindex="0" aria-label="View room detail">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&q=70" alt="" loading="lazy">
+          </div>
+        </div>
+      </div>
+      <div class="room-info reveal-right">
+        <h3 class="room-title">Sala Imperiale</h3>
+        <p class="room-subtitle">Our Grandest Room</p>
+        <p class="room-desc">
+          The Sala Imperiale is the jewel of Ristorante Imperiale — a high-ceilinged chamber dressed in bespoke Florentine wallpaper, hand-blown Murano chandeliers, and a marble-inlaid floor commissioned from a workshop in Carrara. It is a room that announces itself quietly and then overwhelms you.
+        </p>
+        <p class="room-desc">
+          Available for exclusive hire for dinner parties, wedding receptions, milestone celebrations, and product launches where the audience deserves more than a function room.
+        </p>
+        <div class="room-specs" role="list">
+          <div class="room-spec" role="listitem">
+            <span class="room-spec-num">40</span>
+            <span class="room-spec-label">Max Guests</span>
+          </div>
+          <div class="room-spec" role="listitem">
+            <span class="room-spec-num">120</span>
+            <span class="room-spec-label">Sq. Meters</span>
+          </div>
+          <div class="room-spec" role="listitem">
+            <span class="room-spec-num">₹80K</span>
+            <span class="room-spec-label">Min. Spend</span>
+          </div>
+        </div>
+        <ul class="room-features" aria-label="Room features">
+          <li>Murano crystal chandeliers &amp; bespoke Florentine wallpaper</li>
+          <li>Private butler &amp; sommelier service</li>
+          <li>Custom floral arrangements by Casa di Fiori</li>
+          <li>AV system: 85" screen, ambient sound system</li>
+          <li>Personalised menus &amp; hand-calligraphed place cards</li>
+          <li>Aperitivo reception area with cocktail service</li>
+          <li>Private entrance &amp; cloakroom</li>
+        </ul>
+        <a href="#enquiry" class="btn-primary">Enquire Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SALA TOSCANA -->
+  <div class="room-pane" id="sala-toscana" role="tabpanel">
+    <div class="room-grid">
+      <div class="room-images reveal-left">
+        <div class="room-main-image">
+          <img
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80"
+            alt="Sala Toscana — intimate private dining"
+            loading="lazy"
+          >
+        </div>
+        <div class="room-thumbnails">
+          <div class="room-thumb active" tabindex="0">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&q=70" alt="" loading="lazy">
+          </div>
+          <div class="room-thumb" tabindex="0">
+            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=300&q=70" alt="" loading="lazy">
+          </div>
+          <div class="room-thumb" tabindex="0">
+            <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=300&q=70" alt="" loading="lazy">
+          </div>
+        </div>
+      </div>
+      <div class="room-info reveal-right">
+        <h3 class="room-title">Sala Toscana</h3>
+        <p class="room-subtitle">Warmth &amp; Intimacy</p>
+        <p class="room-desc">
+          Named for the hills that inspired it, the Sala Toscana is lined with reclaimed terracotta brick, aged olive wood shelving, and a curated selection of ceramic artwork sourced from artisans in Montelupo Fiorentino. The room breathes warmth.
+        </p>
+        <p class="room-desc">
+          Perfect for family celebrations, rehearsal dinners, and intimate corporate lunches where conversation should flow as freely as the wine.
+        </p>
+        <div class="room-specs" role="list">
+          <div class="room-spec" role="listitem">
+            <span class="room-spec-num">18</span>
+            <span class="room-spec-label">Max Guests</span>
+          </div>
+          <div class="room-spec" role="listitem">
+            <span class="room-spec-num">55</span>
+            <span class="room-spec-label">Sq. Meters</span>
+          </div>
+          <div class="room-spec" role="listitem">
+            <span class="room-spec-num">₹35K</span>
+            <span class="room-spec-label">Min. Spend</span>
+          </div>
+        </div>
+        <ul class="room-features" aria-label="Room features">
+          <li>Terracotta &amp; olive wood interior, handmade ceramic art</li>
+          <li>Dedicated server &amp; wine steward</li>
+          <li>Custom menu tasting consultation with Chef Bellini</li>
+          <li>Vintage Chianti cellar display wall</li>
+          <li>Personalised menus printed in-house</li>
+          <li>Soundproofed for complete privacy</li>
+        </ul>
+        <a href="#enquiry" class="btn-primary">Enquire Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHEF'S TABLE -->
+  <div class="room-pane" id="chefs-table" role="tabpanel">
+    <div class="room-grid">
+      <div class="room-images reveal-left">
+        <div class="room-main-image">
+          <img
+            src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=900&q=80"
+            alt="The Chef's Table — inside the kitchen"
+            loading="lazy"
+          >
+        </div>
+        <div class="room-thumbnails">
+          <div class="room-thumb active" tabindex="0">
+            <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=300&q=70" alt="" loading="lazy">
+          </div>
+          <div class="room-thumb" tabindex="0">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&q=70" alt="" loading="lazy">
+          </div>
+          <div class="room-thumb" tabindex="0">
+            <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=300&q=70" alt="" loading="lazy">
+          </div>
+        </div>
+      </div>
+      <div class="room-info reveal-right">
+        <h3 class="room-title">Il Tavolo dello Chef</h3>
+        <p class="room-subtitle">Inside the Kitchen</p>
+        <p class="room-desc">
+          The rarest table in Mumbai. Positioned inside Chef Bellini's kitchen, this single table for two to six guests offers an unparalleled view of a professional kitchen at full cinematic flow — the fire, the precision, the choreography of a two-starred brigade.
+        </p>
+        <p class="room-desc">
+          Chef Bellini cooks your meal personally, presenting each course at the pass and conversing throughout. An experience reserved for those who have dined everywhere and seek something genuinely unrepeatable.
+        </p>
+        <div class="room-specs" role="list">
+          <div class="room-spec" role="listitem">
+            <span class="room-spec-num">2–6</span>
+            <span class="room-spec-label">Guests Only</span>
+          </div>
+          <div class="room-spec" role="listitem">
+            <span class="room-spec-num">12</span>
+            <span class="room-spec-label">Courses</span>
+          </div>
+          <div class="room-spec" role="listitem">
+            <span class="room-spec-num">₹22K</span>
+            <span class="room-spec-label">Per Person</span>
+          </div>
+        </div>
+        <ul class="room-features" aria-label="Room features">
+          <li>12-course bespoke menu, created the morning of your dinner</li>
+          <li>Chef Bellini cooks &amp; presents each course personally</li>
+          <li>Full wine pairing by Sommelier Priya Malhotra</li>
+          <li>Kitchen tour &amp; behind-the-scenes briefing</li>
+          <li>Signed menu card &amp; kitchen photograph as keepsake</li>
+          <li>Available Tuesday–Saturday by prior arrangement only</li>
+        </ul>
+        <a href="#enquiry" class="btn-primary">Request Chef's Table</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PACKAGES ─── -->
+<section id="packages" aria-labelledby="packages-title">
+  <div class="packages-header">
+    <p class="section-label center reveal">Our Offerings</p>
+    <h2 class="section-title reveal" id="packages-title">Curated <em>Packages</em></h2>
+  </div>
+  <div class="packages-grid reveal stagger">
+    <div class="package-card" data-number="I">
+      <span class="package-icon">♡</span>
+      <h3 class="package-name">Proposta d'Amore</h3>
+      <p class="package-subtitle">The Proposal Package</p>
+      <p class="package-desc">
+        Chef's Table for two, personalised 8-course menu, Champagne Nicolas Feuillatte Blanc de Blancs on ice, scattered rose petals, a bespoke dessert with your message in calligraphy, and a keepsake photograph. Let us help you ask the question.
+      </p>
+      <p class="package-price">From ₹45,000 for two</p>
+    </div>
+    <div class="package-card" data-number="II">
+      <span class="package-icon">✦</span>
+      <h3 class="package-name">Anniversario d'Oro</h3>
+      <p class="package-subtitle">The Golden Anniversary</p>
+      <p class="package-desc">
+        Sala Toscana exclusively, personalised menu reflecting your journey together, a curated wine flight spanning 25 years of Italian vintages, custom calligraphed menus, and a handwritten note from Chef Bellini. For the occasion that deserves a lifetime of memory.
+      </p>
+      <p class="package-price">From ₹60,000 for up to 10 guests</p>
+    </div>
+    <div class="package-card" data-number="III">
+      <span class="package-icon">≋</span>
+      <h3 class="package-name">Cena Aziendale</h3>
+      <p class="package-subtitle">Corporate Dinner</p>
+      <p class="package-desc">
+        Sala Imperiale exclusively, set menu with wine pairing, branded menu cards with your company identity, AV setup for presentations, dedicated Events Manager throughout, and a post-dinner address from Chef Bellini if required. Impress with every detail.
+      </p>
+      <p class="package-price">From ₹80,000 for up to 40 guests</p>
+    </div>
+    <div class="package-card" data-number="IV">
+      <span class="package-icon">◇</span>
+      <h3 class="package-name">Serata di Vino</h3>
+      <p class="package-subtitle">Private Wine Dinner</p>
+      <p class="package-desc">
+        Six courses, six wines, one evening of conversation about Italian viticulture. Our Sommelier Priya Malhotra leads the journey — from the volcanic soils of Etna to the limestone of Barolo. Available for 8–20 guests in the Sala Toscana.
+      </p>
+      <p class="package-price">From ₹15,000 per person (minimum 8)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section id="testimonials" aria-labelledby="testimonials-title">
+  <div class="testimonials-header">
+    <p class="section-label center reveal">What Our Guests Say</p>
+    <h2 class="section-title reveal" id="testimonials-title">Words of <em>Gratitude</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars" aria-label="5 stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="testimonial-quote">
+        We celebrated our 25th anniversary in the Sala Toscana. Chef Bellini had read our reservation note and built a menu around our first shared meal in Florence. I still cannot explain how extraordinary that felt.
+      </p>
+      <p class="testimonial-author">Priyanka &amp; Suresh Mehra</p>
+      <p class="testimonial-occasion">Silver Anniversary, Sala Toscana</p>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars" aria-label="5 stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="testimonial-quote">
+        The Chef's Table was unlike anything I have experienced in thirty years of fine dining globally. To watch Marco work — the silence, the focus, the craft — and then to sit and eat what those hands just made, is genuinely moving.
+      </p>
+      <p class="testimonial-author">Vikram Nair, CEO</p>
+      <p class="testimonial-occasion">Il Tavolo dello Chef</p>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars" aria-label="5 stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="testimonial-quote">
+        Our board dinner in the Sala Imperiale was perfect in every regard. The Events Manager anticipated every need before we expressed it. Three of our guests — seasoned diners — called the next morning to ask how to book again.
+      </p>
+      <p class="testimonial-author">Aisha Fernandes</p>
+      <p class="testimonial-occasion">Corporate Dinner, Sala Imperiale</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ENQUIRY FORM ─── -->
+<section id="enquiry" aria-labelledby="enquiry-title">
+  <div class="enquiry-inner">
+    <div class="enquiry-info reveal-left">
+      <p class="section-label">Begin Here</p>
+      <h2 class="section-title" id="enquiry-title">Make an <em>Enquiry</em></h2>
+      <div class="gold-divider"></div>
+      <p style="font-size:0.9rem; color:rgba(244,237,224,0.55); line-height:1.9; font-family:var(--font-elegant); font-style:italic; margin-bottom:2rem;">
+        Tell us about your occasion. Our Private Events team will respond within 24 hours with a bespoke proposal.
+      </p>
+      <div class="enquiry-detail">
+        <p class="enquiry-detail-title">Contact Our Events Team</p>
+        <div class="enquiry-detail-item">
+          <span>Phone</span>
+          <span><a href="tel:+912266001999" style="color:var(--gold); text-decoration:none;">+91 22 6600 1999</a></span>
+        </div>
+        <div class="enquiry-detail-item">
+          <span>Email</span>
+          <span><a href="mailto:events@imperiale.in" style="color:var(--gold); text-decoration:none;">events@imperiale.in</a></span>
+        </div>
+        <div class="enquiry-detail-item">
+          <span>Hours</span>
+          <span>Mon–Sat, 10AM–7PM</span>
+        </div>
+        <div class="enquiry-detail-item">
+          <span>Response</span>
+          <span>Within 24 Hours</span>
+        </div>
+      </div>
+    </div>
+    <div class="enquiry-form-wrap reveal-right">
+      <h3 class="enquiry-form-title">Your Event Details</h3>
+      <p class="enquiry-form-sub">Fill in as much as you know. Everything else we will discuss together.</p>
+      <form id="enquiry-form" class="enquiry-form-grid" aria-label="Private dining enquiry form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="enq-name">Full Name</label>
+          <input class="form-input" type="text" id="enq-name" name="name" placeholder="Your full name" required autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="enq-phone">Phone</label>
+          <input class="form-input" type="tel" id="enq-phone" name="phone" placeholder="+91 — " required autocomplete="tel">
+        </div>
+        <div class="form-group full">
+          <label class="form-label" for="enq-email">Email Address</label>
+          <input class="form-input" type="email" id="enq-email" name="email" placeholder="your@email.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="enq-occasion">Occasion Type</label>
+          <select class="form-select" id="enq-occasion" name="occasion">
+            <option value="" disabled selected>Select occasion</option>
+            <option>Proposal / Romantic Dinner</option>
+            <option>Birthday Celebration</option>
+            <option>Anniversary</option>
+            <option>Wedding Reception</option>
+            <option>Corporate Dinner</option>
+            <option>Private Wine Dinner</option>
+            <option>Chef's Table</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="enq-guests">Approximate Guests</label>
+          <select class="form-select" id="enq-guests" name="guests">
+            <option value="" disabled selected>Number of guests</option>
+            <option>2–4</option>
+            <option>5–10</option>
+            <option>11–20</option>
+            <option>21–40</option>
+            <option>40+</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="enq-date">Preferred Date</label>
+          <input class="form-input" type="date" id="enq-date" name="date">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="enq-room">Room Preference</label>
+          <select class="form-select" id="enq-room" name="room">
+            <option value="" disabled selected>Select a room</option>
+            <option>Sala Imperiale (up to 40)</option>
+            <option>Sala Toscana (up to 18)</option>
+            <option>Il Tavolo dello Chef (2–6)</option>
+            <option>Guidance Welcome</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label class="form-label" for="enq-message">Tell Us More</label>
+          <textarea
+            class="enquiry-textarea" id="enq-message" name="message" rows="4"
+            placeholder="The story behind your occasion, any special requests, menu preferences, dietary requirements…"
+          ></textarea>
+        </div>
+        <div class="enquiry-submit" style="grid-column: span 2;">
+          <button type="submit" class="btn-enquire">Send Enquiry</button>
+          <p class="enquiry-promise">We respond within 24 hours, always personally.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer role="contentinfo">
+  <div class="footer-top">
+    <div>
+      <p class="footer-brand-name">Ristorante Imperiale</p>
+      <p class="footer-brand-sub">Dal 1998 — Mumbai</p>
+      <p class="footer-brand-desc">
+        A quarter century of Italian culinary tradition, lovingly preserved and offered to those who seek more than a meal.
+      </p>
+    </div>
+    <div>
+      <p class="footer-col-title">Dining</p>
+      <ul class="footer-col-links">
+        <li><a href="ristorante-imperiale.html#menu">À La Carte</a></li>
+        <li><a href="tasting-menu.html">Tasting Menu</a></li>
+        <li><a href="private-dining.html">Private Dining</a></li>
+        <li><a href="ristorante-imperiale.html#reservations">Reservations</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">About</p>
+      <ul class="footer-col-links">
+        <li><a href="ristorante-imperiale.html#about">Our Story</a></li>
+        <li><a href="ristorante-imperiale.html#chef">Chef Marco</a></li>
+        <li><a href="ristorante-imperiale.html#gallery">Gallery</a></li>
+        <li><a href="ristorante-imperiale.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Newsletter</p>
+      <p style="font-size:0.82rem; color:rgba(244,237,224,0.45); margin-bottom:1rem; line-height:1.7;">
+        Seasonal menus, wine notes &amp; exclusive event invitations.
+      </p>
+      <form class="newsletter-form" id="newsletter-form" aria-label="Newsletter">
+        <input class="newsletter-input" type="email" placeholder="Your email address" required aria-label="Email address">
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2025 Ristorante Imperiale. All rights reserved.</p>
+    <ul class="footer-legal">
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="ristorante-imperiale.html">Home</a></li>
+    </ul>
+  </div>
+</footer>
+
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">Close &times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+<script>
+/* ── Private Dining page extras ── */
+(function () {
+  /* Thumbnail switcher */
+  document.querySelectorAll('.room-thumbnails').forEach(thumbs => {
+    const mainImg = thumbs.closest('.room-images').querySelector('.room-main-image img');
+    thumbs.querySelectorAll('.room-thumb').forEach(thumb => {
+      thumb.addEventListener('click', function () {
+        thumbs.querySelectorAll('.room-thumb').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        const src = this.querySelector('img').src.replace(/w=\d+/, 'w=900');
+        if (mainImg) { mainImg.style.opacity = '0'; setTimeout(() => { mainImg.src = src; mainImg.style.opacity = '1'; }, 200); }
+      });
+      thumb.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); thumb.click(); } });
+    });
+  });
+
+  /* Enquiry form */
+  const enqForm = document.getElementById('enquiry-form');
+  if (enqForm) {
+    const dateInput = document.getElementById('enq-date');
+    if (dateInput) {
+      const t = new Date(); t.setDate(t.getDate() + 7);
+      const iso = t.toISOString().split('T')[0];
+      dateInput.min = new Date().toISOString().split('T')[0];
+      dateInput.value = iso;
+    }
+    enqForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const btn = this.querySelector('.btn-enquire');
+      const orig = btn.textContent;
+      btn.textContent = 'Sending…'; btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Sent ✓';
+        btn.style.cssText = 'background:#2a5a1a; color:#f4ede0';
+        window._showToast && window._showToast('Your enquiry has been received. We will be in touch within 24 hours.');
+        setTimeout(() => { enqForm.reset(); btn.textContent = orig; btn.disabled = false; btn.style.cssText = ''; if (dateInput) dateInput.value = new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0]; }, 5000);
+      }, 1800);
+    });
+  }
+
+  /* Room image fade transition */
+  document.querySelectorAll('.room-main-image img').forEach(img => {
+    img.style.transition = 'opacity 0.3s ease, transform 0.8s ease, filter 0.5s ease';
+  });
+})();
+</script>
+</body>
+</html>

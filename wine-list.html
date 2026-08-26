@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The wine cellar at Ristorante Imperiale, Mumbai — over 200 Italian labels curated by Sommelier Priya Malhotra. Barolo, Brunello, Amarone, Franciacorta and beyond.">
+<title>La Cantina — Wine List | Ristorante Imperiale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ─── WINE LIST PAGE ─── */
+
+  /* Hero */
+  .wine-hero {
+    position: relative;
+    height: 65vh; min-height: 500px;
+    display: flex; align-items: flex-end;
+    padding: 0 5vw 5.5rem;
+    overflow: hidden;
+  }
+  .wine-hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1920&q=80');
+    background-size: cover; background-position: center 40%;
+    animation: heroZoom 10s ease-out forwards;
+  }
+  .wine-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(8,8,7,0.96) 0%,
+      rgba(8,8,7,0.55) 50%,
+      rgba(107,26,42,0.25) 100%
+    );
+  }
+  .wine-hero-content { position: relative; z-index: 2; max-width: 800px; }
+  .wine-hero-eyebrow {
+    font-family: var(--font-elegant); font-size: 0.88rem;
+    letter-spacing: 0.42em; text-transform: uppercase;
+    color: var(--gold); font-style: italic; margin-bottom: 0.8rem;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.3s;
+  }
+  .wine-hero-title {
+    font-family: var(--font-serif); font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 400; letter-spacing: 0.07em; color: var(--ivory);
+    line-height: 1.05; margin-bottom: 1.2rem;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.55s;
+  }
+  .wine-hero-title em {
+    font-style: italic; color: var(--gold);
+    font-family: var(--font-elegant); font-size: 1.12em;
+  }
+  .wine-hero-sommelier {
+    display: flex; align-items: center; gap: 1.2rem;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.78s;
+  }
+  .sommelier-avatar {
+    width: 52px; height: 52px; border-radius: 50%;
+    overflow: hidden; border: 1px solid var(--gold-dark);
+    flex-shrink: 0;
+  }
+  .sommelier-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .sommelier-info {}
+  .sommelier-name {
+    font-family: var(--font-serif); font-size: 0.8rem;
+    letter-spacing: 0.12em; color: var(--ivory); display: block;
+  }
+  .sommelier-title {
+    font-family: var(--font-elegant); font-size: 0.78rem;
+    font-style: italic; color: rgba(201,168,76,0.7); display: block;
+  }
+
+  /* ── Sommelier Note ── */
+  .somm-note {
+    background: var(--charcoal);
+    padding: 4.5rem 5vw;
+    position: relative;
+  }
+  .somm-note::before {
+    content: '\201C';
+    position: absolute; left: 5vw; top: 2rem;
+    font-family: var(--font-elegant); font-size: 8rem;
+    color: rgba(201,168,76,0.08); line-height: 1; pointer-events: none;
+  }
+  .somm-note-inner {
+    max-width: 760px; margin: 0 auto; text-align: center;
+  }
+  .somm-note-text {
+    font-family: var(--font-elegant); font-size: clamp(1.1rem, 2vw, 1.45rem);
+    font-weight: 300; font-style: italic; color: rgba(244,237,224,0.75);
+    line-height: 1.75; margin-bottom: 1.2rem;
+  }
+  .somm-note-attr {
+    font-family: var(--font-serif); font-size: 0.6rem;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); opacity: 0.7;
+  }
+  .cellar-stats {
+    display: flex; justify-content: center; gap: 4rem;
+    margin-top: 2.8rem; padding-top: 2.8rem;
+    border-top: 1px solid rgba(201,168,76,0.12);
+  }
+  .cellar-stat { text-align: center; }
+  .cellar-num {
+    font-family: var(--font-serif); font-size: 2rem; font-weight: 400;
+    color: var(--gold); display: block; line-height: 1;
+  }
+  .cellar-label {
+    font-family: var(--font-serif); font-size: 0.58rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: rgba(244,237,224,0.4);
+    margin-top: 0.4rem; display: block;
+  }
+
+  /* ── Wine Filters ── */
+  #wine-list { background: var(--black); padding: 6rem 5vw 7rem; }
+  .wine-list-header { text-align: center; margin-bottom: 4rem; }
+
+  .wine-filter-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    padding-bottom: 1.5rem; margin-bottom: 3.5rem;
+  }
+  .wine-filter-tabs {
+    display: flex; gap: 0; flex-wrap: wrap;
+  }
+  .wine-filter-tab {
+    font-family: var(--font-serif); font-size: 0.65rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(244,237,224,0.45);
+    padding: 0.6rem 1.4rem; background: transparent; border: none;
+    cursor: pointer; position: relative;
+    transition: color var(--transition-f);
+  }
+  .wine-filter-tab::after {
+    content: ''; position: absolute; bottom: -1.5rem; left: 0; right: 100%;
+    height: 2px; background: var(--gold);
+    transition: right var(--transition-f);
+  }
+  .wine-filter-tab:hover { color: rgba(244,237,224,0.75); }
+  .wine-filter-tab.active { color: var(--gold); }
+  .wine-filter-tab.active::after { right: 0; }
+
+  .wine-search-wrap {
+    display: flex; align-items: center; gap: 0.6rem;
+    border-bottom: 1px solid rgba(244,237,224,0.15);
+    padding-bottom: 0.4rem;
+  }
+  .wine-search-icon {
+    font-family: var(--font-elegant); font-size: 0.9rem;
+    color: rgba(201,168,76,0.5); line-height: 1; font-style: italic;
+  }
+  .wine-search {
+    background: transparent; border: none; outline: none;
+    font-family: var(--font-elegant); font-size: 0.9rem;
+    color: var(--ivory); font-style: italic;
+    width: 200px;
+    transition: width var(--transition-f);
+  }
+  .wine-search::placeholder { color: rgba(244,237,224,0.3); }
+  .wine-search:focus { width: 260px; }
+
+  /* ── Wine Sections ── */
+  .wine-section { display: none; }
+  .wine-section.active { display: block; }
+
+  .wine-section-intro {
+    display: grid; grid-template-columns: 1fr 3fr;
+    gap: 3rem; align-items: start; margin-bottom: 3rem;
+  }
+  .wine-region-label {
+    font-family: var(--font-serif); font-size: 0.6rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.5rem; display: block;
+  }
+  .wine-region-title {
+    font-family: var(--font-elegant); font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 300; font-style: italic; color: var(--ivory); line-height: 1.2;
+  }
+  .wine-region-desc {
+    font-size: 0.87rem; color: rgba(244,237,224,0.5);
+    line-height: 1.85; font-family: var(--font-elegant); font-style: italic;
+    padding-top: 0.5rem;
+  }
+
+  /* Wine Table */
+  .wine-table {
+    width: 100%; border-collapse: collapse;
+    margin-bottom: 4rem;
+  }
+  .wine-table thead tr {
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .wine-table th {
+    font-family: var(--font-serif); font-size: 0.58rem;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(201,168,76,0.6); font-weight: 400;
+    padding: 0 0.5rem 1rem 0;
+    text-align: left;
+  }
+  .wine-table th:last-child { text-align: right; padding-right: 0; }
+  .wine-table tbody tr {
+    border-bottom: 1px solid rgba(201,168,76,0.06);
+    transition: background var(--transition-f), padding var(--transition-f);
+    cursor: default;
+  }
+  .wine-table tbody tr:hover { background: rgba(201,168,76,0.04); }
+  .wine-table td {
+    padding: 1.4rem 0.5rem 1.4rem 0;
+    vertical-align: top;
+  }
+  .wine-table td:last-child { text-align: right; padding-right: 0; }
+  .wt-name {
+    font-family: var(--font-elegant); font-size: 1.05rem;
+    font-weight: 500; color: var(--ivory); display: block;
+    margin-bottom: 0.25rem; line-height: 1.3;
+  }
+  .wt-grapes {
+    font-family: var(--font-elegant); font-size: 0.78rem;
+    font-style: italic; color: rgba(244,237,224,0.4);
+  }
+  .wt-region {
+    font-family: var(--font-elegant); font-size: 0.82rem;
+    font-style: italic; color: rgba(244,237,224,0.5);
+  }
+  .wt-vintage {
+    font-family: var(--font-serif); font-size: 0.78rem;
+    color: rgba(244,237,224,0.55); letter-spacing: 0.05em;
+  }
+  .wt-notes {
+    font-family: var(--font-elegant); font-size: 0.8rem;
+    font-style: italic; color: rgba(244,237,224,0.45);
+    line-height: 1.6; max-width: 320px;
+  }
+  .wt-price {
+    font-family: var(--font-serif); font-size: 0.9rem;
+    color: var(--gold); white-space: nowrap; letter-spacing: 0.04em;
+  }
+  .wt-rating {
+    display: flex; gap: 2px; margin-top: 0.3rem; justify-content: flex-end;
+  }
+  .wt-rating span { color: var(--gold); font-size: 0.6rem; }
+  .wt-badge {
+    display: inline-block; font-family: var(--font-serif);
+    font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid rgba(201,168,76,0.4);
+    padding: 2px 7px; margin-left: 0.5rem; vertical-align: middle;
+  }
+
+  /* ── Wine by Glass ── */
+  .glass-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: rgba(201,168,76,0.1);
+    margin-bottom: 4rem;
+  }
+  .glass-card {
+    background: var(--black); padding: 2rem 1.8rem;
+    transition: background var(--transition-f);
+  }
+  .glass-card:hover { background: rgba(201,168,76,0.04); }
+  .glass-type {
+    font-family: var(--font-serif); font-size: 0.58rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem; display: block;
+  }
+  .glass-wines { list-style: none; }
+  .glass-wine-item {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.07);
+    gap: 1rem;
+  }
+  .glass-wine-item:last-child { border-bottom: none; }
+  .glass-wine-name {
+    font-family: var(--font-elegant); font-size: 0.9rem;
+    font-weight: 400; color: rgba(244,237,224,0.8); line-height: 1.35;
+    flex: 1;
+  }
+  .glass-wine-info {
+    font-family: var(--font-elegant); font-size: 0.75rem;
+    font-style: italic; color: rgba(244,237,224,0.4);
+  }
+  .glass-wine-price {
+    font-family: var(--font-serif); font-size: 0.82rem;
+    color: var(--gold); white-space: nowrap; padding-top: 2px;
+  }
+
+  /* ── Sommelier Picks ── */
+  #somm-picks {
+    background: var(--charcoal);
+    padding: 7rem 5vw;
+  }
+  .picks-header { text-align: center; margin-bottom: 4rem; }
+  .picks-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; background: rgba(201,168,76,0.1);
+    max-width: 1100px; margin: 0 auto;
+  }
+  .pick-card {
+    background: var(--charcoal);
+    padding: 2.5rem 2rem;
+    position: relative; overflow: hidden;
+    transition: background var(--transition-f);
+  }
+  .pick-card:hover { background: var(--mid); }
+  .pick-card-img {
+    width: 70px; height: 70px; object-fit: cover;
+    border-radius: 50%; margin-bottom: 1.5rem;
+    border: 1px solid rgba(201,168,76,0.2);
+    filter: grayscale(30%);
+    transition: filter 0.4s ease;
+  }
+  .pick-card:hover .pick-card-img { filter: grayscale(0%); }
+  .pick-month {
+    font-family: var(--font-serif); font-size: 0.55rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.6rem; display: block;
+  }
+  .pick-name {
+    font-family: var(--font-elegant); font-size: 1.05rem;
+    font-weight: 500; color: var(--ivory); margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+  .pick-producer {
+    font-family: var(--font-elegant); font-size: 0.8rem;
+    font-style: italic; color: rgba(201,168,76,0.7);
+    margin-bottom: 1rem; display: block;
+  }
+  .pick-note {
+    font-size: 0.82rem; color: rgba(244,237,224,0.5);
+    line-height: 1.8; font-family: var(--font-elegant); font-style: italic;
+    margin-bottom: 1.2rem;
+  }
+  .pick-price {
+    font-family: var(--font-serif); font-size: 0.85rem; color: var(--gold);
+  }
+
+  /* ── Private Cellar CTA ── */
+  .cellar-cta {
+    background: var(--black);
+    padding: 7rem 5vw;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cellar-cta::before {
+    content: 'VINO'; position: absolute;
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    font-family: var(--font-serif); font-size: 25vw; font-weight: 700;
+    color: rgba(201,168,76,0.025); pointer-events: none;
+    letter-spacing: 0.1em; white-space: nowrap;
+  }
+  .cellar-cta-inner {
+    max-width: 600px; margin: 0 auto; position: relative; z-index: 1;
+  }
+  .cellar-cta-inner .section-label { justify-content: center; }
+  .cellar-cta-inner .section-label::before { display: none; }
+  .cellar-cta-text {
+    font-family: var(--font-elegant); font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+    font-weight: 300; font-style: italic; color: rgba(244,237,224,0.55);
+    line-height: 1.85; margin: 1.5rem 0 2.8rem;
+  }
+
+  /* ── No Results ── */
+  .no-results {
+    text-align: center; padding: 4rem 0;
+    display: none;
+  }
+  .no-results.show { display: block; }
+  .no-results-text {
+    font-family: var(--font-elegant); font-size: 1.1rem;
+    font-style: italic; color: rgba(244,237,224,0.4);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .wine-section-intro { grid-template-columns: 1fr; gap: 1rem; }
+    .glass-grid { grid-template-columns: 1fr; }
+    .picks-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .wine-filter-bar { flex-direction: column; align-items: flex-start; }
+    .wine-filter-tabs { gap: 0; }
+    .cellar-stats { gap: 2rem; flex-wrap: wrap; justify-content: center; }
+    .wine-table th:nth-child(4),
+    .wine-table td:nth-child(4) { display: none; }
+    .picks-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+  }
+  @media (max-width: 560px) {
+    .wine-table th:nth-child(3),
+    .wine-table td:nth-child(3) { display: none; }
+    .wt-notes { max-width: 200px; font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─── -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <a href="ristorante-imperiale.html" class="nav-logo">
+    <span class="nav-logo-main">Ristorante Imperiale</span>
+    <span class="nav-logo-sub">Mumbai &middot; Dal 1998</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="ristorante-imperiale.html#about">About</a></li>
+    <li><a href="ristorante-imperiale.html#menu">Menu</a></li>
+    <li><a href="tasting-menu.html">Tasting Menu</a></li>
+    <li><a href="private-dining.html">Private Dining</a></li>
+    <li><a href="wine-list.html" class="active">Wine</a></li>
+  </ul>
+  <a href="ristorante-imperiale.html#reservations" class="nav-cta">Reserve</a>
+  <button class="nav-burger" id="burger-btn" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div id="mobile-menu" aria-hidden="true">
+  <a href="ristorante-imperiale.html">Home</a>
+  <a href="ristorante-imperiale.html#menu">Menu</a>
+  <a href="tasting-menu.html">Tasting Menu</a>
+  <a href="private-dining.html">Private Dining</a>
+  <a href="wine-list.html">Wine List</a>
+  <a href="ristorante-imperiale.html#contact">Contact</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section class="wine-hero" aria-label="Wine List hero">
+  <div class="wine-hero-bg" role="img" aria-label="Italian wine cellar"></div>
+  <div class="wine-hero-overlay"></div>
+  <div class="wine-hero-content">
+    <p class="wine-hero-eyebrow">Over 200 Italian Labels</p>
+    <h1 class="wine-hero-title">La <em>Cantina</em></h1>
+    <div class="wine-hero-sommelier" aria-label="Curated by Sommelier Priya Malhotra">
+      <div class="sommelier-avatar">
+        <img
+          src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80"
+          alt="Sommelier Priya Malhotra"
+          loading="lazy"
+        >
+      </div>
+      <div class="sommelier-info">
+        <span class="sommelier-name">Priya Malhotra</span>
+        <span class="sommelier-title">Head Sommelier, WSET Diploma</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SOMMELIER NOTE ─── -->
+<div class="somm-note" aria-labelledby="somm-quote">
+  <div class="somm-note-inner">
+    <p class="somm-note-text reveal" id="somm-quote">
+      "A wine list is a letter written to the guest before they arrive. Every label I choose is a word in that letter — chosen for its honesty, its beauty, and its ability to make the food beside it sing a little louder."
+    </p>
+    <p class="somm-note-attr reveal">— Priya Malhotra, Head Sommelier</p>
+    <div class="cellar-stats reveal stagger" role="list">
+      <div class="cellar-stat" role="listitem">
+        <span class="cellar-num counter" data-target="214" data-suffix="">214</span>
+        <span class="cellar-label">Labels</span>
+      </div>
+      <div class="cellar-stat" role="listitem">
+        <span class="cellar-num counter" data-target="18" data-suffix="">18</span>
+        <span class="cellar-label">Italian Regions</span>
+      </div>
+      <div class="cellar-stat" role="listitem">
+        <span class="cellar-num counter" data-target="3200" data-suffix="">3,200</span>
+        <span class="cellar-label">Bottles in Cellar</span>
+      </div>
+      <div class="cellar-stat" role="listitem">
+        <span class="cellar-num counter" data-target="25" data-suffix="">25</span>
+        <span class="cellar-label">By the Glass</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── WINE LIST ─── -->
+<section id="wine-list" aria-labelledby="wine-list-title">
+  <div class="wine-list-header">
+    <p class="section-label center reveal">The Full List</p>
+    <h2 class="section-title reveal" id="wine-list-title">Wines of <em>Italia</em></h2>
+  </div>
+
+  <div class="wine-filter-bar reveal" role="toolbar" aria-label="Filter wine list">
+    <div class="wine-filter-tabs" role="tablist">
+      <button class="wine-filter-tab active" data-section="rossi" role="tab" aria-selected="true">Vini Rossi</button>
+      <button class="wine-filter-tab" data-section="bianchi" role="tab" aria-selected="false">Vini Bianchi</button>
+      <button class="wine-filter-tab" data-section="spumanti" role="tab" aria-selected="false">Spumanti</button>
+      <button class="wine-filter-tab" data-section="dolci" role="tab" aria-selected="false">Vini Dolci</button>
+      <button class="wine-filter-tab" data-section="glass" role="tab" aria-selected="false">Al Bicchiere</button>
+    </div>
+    <div class="wine-search-wrap" role="search">
+      <span class="wine-search-icon" aria-hidden="true">◎</span>
+      <input class="wine-search" type="search" placeholder="Search wines…" aria-label="Search wine list" id="wine-search-input">
+    </div>
+  </div>
+
+  <!-- VINI ROSSI -->
+  <div class="wine-section active" id="rossi" role="tabpanel">
+    <div class="wine-section-intro reveal">
+      <div>
+        <span class="wine-region-label">Red Wines</span>
+        <h3 class="wine-region-title">Vini Rossi d'Italia</h3>
+      </div>
+      <p class="wine-region-desc">
+        From the brooding Nebbiolo of Piemonte to the volcanic Nerello Mascalese of Etna, Italy's red wines carry the full weight of their terroir. Our red list is arranged by structure — from lighter, perfumed expressions to the great, age-worthy powerhouses of the peninsula.
+      </p>
+    </div>
+
+    <div class="no-results" id="rossi-no-results" role="status">
+      <p class="no-results-text">No wines matching your search. Try another term.</p>
+    </div>
+
+    <table class="wine-table reveal" aria-label="Red wines list" id="rossi-table">
+      <thead>
+        <tr>
+          <th scope="col">Wine / Producer</th>
+          <th scope="col">Region</th>
+          <th scope="col">Vintage</th>
+          <th scope="col">Tasting Note</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="wine-row">
+          <td><span class="wt-name">Barolo DOCG "Monfortino" <span class="wt-badge">Prestige</span></span><span class="wt-grapes">Nebbiolo — Giacomo Conterno</span></td>
+          <td><span class="wt-region">Langhe, Piemonte</span></td>
+          <td><span class="wt-vintage">2015</span></td>
+          <td><span class="wt-notes">Tar, dried roses, iron, forest floor. Monumental tannic structure, decades of life ahead.</span></td>
+          <td><span class="wt-price">₹32,000</span><div class="wt-rating" aria-label="5 stars"><span>★★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Brunello di Montalcino DOCG <span class="wt-badge">Prestige</span></span><span class="wt-grapes">Sangiovese Grosso — Biondi-Santi</span></td>
+          <td><span class="wt-region">Montalcino, Toscana</span></td>
+          <td><span class="wt-vintage">2016</span></td>
+          <td><span class="wt-notes">Wild cherries, tobacco leaf, leather. Silk and iron intertwined — the summit of Sangiovese.</span></td>
+          <td><span class="wt-price">₹28,500</span><div class="wt-rating" aria-label="5 stars"><span>★★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Amarone della Valpolicella DOCG</span><span class="wt-grapes">Corvina, Molinara — Masi "Costasera"</span></td>
+          <td><span class="wt-region">Veneto</span></td>
+          <td><span class="wt-vintage">2016</span></td>
+          <td><span class="wt-notes">Dark chocolate, dried fig, coffee, tobacco. Full-bodied, velvet finish, appassimento power.</span></td>
+          <td><span class="wt-price">₹18,500</span><div class="wt-rating" aria-label="5 stars"><span>★★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Chianti Classico Gran Selezione DOCG</span><span class="wt-grapes">Sangiovese — Antinori "Badia a Passignano"</span></td>
+          <td><span class="wt-region">Toscana</span></td>
+          <td><span class="wt-vintage">2019</span></td>
+          <td><span class="wt-notes">Violet, cedar, morello cherry, fine tannin. Complex and elegant, ready now or in a decade.</span></td>
+          <td><span class="wt-price">₹9,800</span><div class="wt-rating" aria-label="4 stars"><span>★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Sagrantino di Montefalco DOCG</span><span class="wt-grapes">Sagrantino — Arnaldo-Caprai "25 Anni"</span></td>
+          <td><span class="wt-region">Umbria</span></td>
+          <td><span class="wt-vintage">2017</span></td>
+          <td><span class="wt-notes">Black plum, licorice, ink, leather. The most tannic of Italian grapes, tamed into greatness here.</span></td>
+          <td><span class="wt-price">₹14,200</span><div class="wt-rating" aria-label="5 stars"><span>★★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Etna Rosso DOC "Rovittello"</span><span class="wt-grapes">Nerello Mascalese — Benanti</span></td>
+          <td><span class="wt-region">Etna, Sicilia</span></td>
+          <td><span class="wt-vintage">2020</span></td>
+          <td><span class="wt-notes">Wild strawberry, ash, red flowers. Volcanic minerality, gossamer tannins — Burgundy's Sicilian cousin.</span></td>
+          <td><span class="wt-price">₹8,400</span><div class="wt-rating" aria-label="4 stars"><span>★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Barolo DOCG "Cascina Francia"</span><span class="wt-grapes">Nebbiolo — Giacomo Conterno</span></td>
+          <td><span class="wt-region">Serralunga, Piemonte</span></td>
+          <td><span class="wt-vintage">2017</span></td>
+          <td><span class="wt-notes">Orange zest, tar, crushed rose, mineral precision. Purer and more perfumed than Monfortino, yet equally compelling.</span></td>
+          <td><span class="wt-price">₹21,000</span><div class="wt-rating" aria-label="5 stars"><span>★★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Primitivo di Manduria "Sessantanni"</span><span class="wt-grapes">Primitivo — San Marzano</span></td>
+          <td><span class="wt-region">Puglia</span></td>
+          <td><span class="wt-vintage">2019</span></td>
+          <td><span class="wt-notes">60-year-old vines. Blueberry compote, dark spice, mocha. Generous and sun-drenched, perfectly balanced.</span></td>
+          <td><span class="wt-price">₹7,200</span><div class="wt-rating" aria-label="4 stars"><span>★★★★</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VINI BIANCHI -->
+  <div class="wine-section" id="bianchi" role="tabpanel">
+    <div class="wine-section-intro reveal">
+      <div>
+        <span class="wine-region-label">White Wines</span>
+        <h3 class="wine-region-title">Vini Bianchi d'Italia</h3>
+      </div>
+      <p class="wine-region-desc">
+        Italian whites range from the electric citrus of Campanian Greco di Tufo to the saline, mineral depth of Sardinian Vermentino. These are not afterthoughts — they are wines of ambition and identity, built to accompany the finest seafood, risotto, and antipasti our kitchen produces.
+      </p>
+    </div>
+    <table class="wine-table reveal" id="bianchi-table" aria-label="White wines list">
+      <thead>
+        <tr>
+          <th scope="col">Wine / Producer</th>
+          <th scope="col">Region</th>
+          <th scope="col">Vintage</th>
+          <th scope="col">Tasting Note</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="wine-row">
+          <td><span class="wt-name">Gavi di Gavi DOCG "Black Label" <span class="wt-badge">Signature</span></span><span class="wt-grapes">Cortese — La Scolca</span></td>
+          <td><span class="wt-region">Piemonte</span></td>
+          <td><span class="wt-vintage">2022</span></td>
+          <td><span class="wt-notes">Green apple, almonds, chalk, citrus blossom. Italy's benchmark dry white — precise and luminous.</span></td>
+          <td><span class="wt-price">₹7,400</span><div class="wt-rating" aria-label="4 stars"><span>★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Greco di Tufo DOCG "Vigna Cicogna"</span><span class="wt-grapes">Greco — Mastroberardino</span></td>
+          <td><span class="wt-region">Campania</span></td>
+          <td><span class="wt-vintage">2021</span></td>
+          <td><span class="wt-notes">White peach, hazelnut, volcanic smoke, saline finish. The great white wine of southern Italy.</span></td>
+          <td><span class="wt-price">₹6,800</span><div class="wt-rating" aria-label="4 stars"><span>★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Soave Classico "La Rocca" <span class="wt-badge">Prestige</span></span><span class="wt-grapes">Garganega — Pieropan</span></td>
+          <td><span class="wt-region">Veneto</span></td>
+          <td><span class="wt-vintage">2020</span></td>
+          <td><span class="wt-notes">Chamomile, ripe pear, honey, almond. The finest Soave being made — rich yet perfectly balanced.</span></td>
+          <td><span class="wt-price">₹9,200</span><div class="wt-rating" aria-label="5 stars"><span>★★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Vermentino di Sardegna "Cru Enologo"</span><span class="wt-grapes">Vermentino — Sella &amp; Mosca</span></td>
+          <td><span class="wt-region">Sardegna</span></td>
+          <td><span class="wt-vintage">2022</span></td>
+          <td><span class="wt-notes">Sea breeze, lemon zest, white peach, bitter almond finish. Made for crudo and seafood.</span></td>
+          <td><span class="wt-price">₹5,800</span><div class="wt-rating" aria-label="4 stars"><span>★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Falanghina del Sannio DOC</span><span class="wt-grapes">Falanghina — Feudi di San Gregorio</span></td>
+          <td><span class="wt-region">Campania</span></td>
+          <td><span class="wt-vintage">2022</span></td>
+          <td><span class="wt-notes">Apricot, jasmine, lime, crisp acidity. Expressive and fruit-forward, outstanding with pasta al limone.</span></td>
+          <td><span class="wt-price">₹5,400</span><div class="wt-rating" aria-label="4 stars"><span>★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Pinot Grigio Ramato "Vigna Bellaria"</span><span class="wt-grapes">Pinot Grigio — Livio Felluga</span></td>
+          <td><span class="wt-region">Collio, Friuli-VG</span></td>
+          <td><span class="wt-vintage">2021</span></td>
+          <td><span class="wt-notes">Copper-pink, 12 hours skin contact. Orange, quince, spice, texture — a very different Pinot Grigio.</span></td>
+          <td><span class="wt-price">₹8,600</span><div class="wt-rating" aria-label="4 stars"><span>★★★★</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SPUMANTI -->
+  <div class="wine-section" id="spumanti" role="tabpanel">
+    <div class="wine-section-intro reveal">
+      <div>
+        <span class="wine-region-label">Sparkling Wines</span>
+        <h3 class="wine-region-title">Spumanti &amp; Bollicine</h3>
+      </div>
+      <p class="wine-region-desc">
+        Italy's sparkling wines deserve their moment without comparison to Champagne. Franciacorta from Lombardy uses the same method with native grapes; Prosecco Superiore from Valdobbiadene brings effortless charm; Trentodoc from the Dolomites offers Alpine precision.
+      </p>
+    </div>
+    <table class="wine-table reveal" id="spumanti-table" aria-label="Sparkling wines list">
+      <thead>
+        <tr>
+          <th scope="col">Wine / Producer</th>
+          <th scope="col">Region</th>
+          <th scope="col">Style</th>
+          <th scope="col">Tasting Note</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="wine-row">
+          <td><span class="wt-name">Franciacorta Riserva "Vittorio Moretti" <span class="wt-badge">Prestige</span></span><span class="wt-grapes">Chardonnay, Pinot Nero — Bellavista</span></td>
+          <td><span class="wt-region">Brescia, Lombardia</span></td>
+          <td><span class="wt-vintage">Brut Nature, 2016</span></td>
+          <td><span class="wt-notes">Ultra-fine perlage, brioche, ripe citrus, Mirabelle plum, chalky mineral finish. Italy's finest sparkling.</span></td>
+          <td><span class="wt-price">₹22,000</span><div class="wt-rating" aria-label="5 stars"><span>★★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Franciacorta Dosage Zéro DOCG <span class="wt-badge">Signature</span></span><span class="wt-grapes">Chardonnay, PN, PB — Ca' del Bosco</span></td>
+          <td><span class="wt-region">Lombardia</span></td>
+          <td><span class="wt-vintage">Brut, 2018</span></td>
+          <td><span class="wt-notes">Champagne method, 36-month lees. Toast, white cherry, flint, green apple. Zero dosage — pure and electric.</span></td>
+          <td><span class="wt-price">₹12,800</span><div class="wt-rating" aria-label="5 stars"><span>★★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Trentodoc "Giulio Ferrari" Riserva <span class="wt-badge">Prestige</span></span><span class="wt-grapes">Chardonnay — Ferrari</span></td>
+          <td><span class="wt-region">Trentino-A. A.</span></td>
+          <td><span class="wt-vintage">Blanc de Blancs, 2012</span></td>
+          <td><span class="wt-notes">10+ years on lees. Hazelnut praline, croissant, Alpine herbs, extraordinary depth and length.</span></td>
+          <td><span class="wt-price">₹18,500</span><div class="wt-rating" aria-label="5 stars"><span>★★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Prosecco Superiore di Cartizze DOCG</span><span class="wt-grapes">Glera — Nino Franco</span></td>
+          <td><span class="wt-region">Valdobbiadene, Veneto</span></td>
+          <td><span class="wt-vintage">Dry, NV</span></td>
+          <td><span class="wt-notes">Wisteria, white peach, honey dew, gentle effervescence. The Grand Cru hill of Prosecco.</span></td>
+          <td><span class="wt-price">₹7,400</span><div class="wt-rating" aria-label="4 stars"><span>★★★★</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VINI DOLCI -->
+  <div class="wine-section" id="dolci" role="tabpanel">
+    <div class="wine-section-intro reveal">
+      <div>
+        <span class="wine-region-label">Sweet &amp; Dessert Wines</span>
+        <h3 class="wine-region-title">Vini Dolci &amp; da Meditazione</h3>
+      </div>
+      <p class="wine-region-desc">
+        Italy's sweet wines are perhaps the world's most misunderstood treasure. Passito, dried-grape wines of extraordinary concentration; Vin Santo, the holy wine of Tuscany; Moscato d'Asti, the whisper of sweetness that ends a meal in a sigh.
+      </p>
+    </div>
+    <table class="wine-table reveal" id="dolci-table" aria-label="Sweet wines list">
+      <thead>
+        <tr>
+          <th scope="col">Wine / Producer</th>
+          <th scope="col">Region</th>
+          <th scope="col">Vintage</th>
+          <th scope="col">Tasting Note</th>
+          <th scope="col">Price (50cl)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="wine-row">
+          <td><span class="wt-name">Passito di Pantelleria "Ben Ryé" <span class="wt-badge">Prestige</span></span><span class="wt-grapes">Zibibbo — Donnafugata</span></td>
+          <td><span class="wt-region">Pantelleria, Sicilia</span></td>
+          <td><span class="wt-vintage">2020</span></td>
+          <td><span class="wt-notes">Apricot jam, candied citrus, saffron, honey. Made from sun-dried grapes on a volcanic island — intense perfection.</span></td>
+          <td><span class="wt-price">₹9,400</span><div class="wt-rating" aria-label="5 stars"><span>★★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Vin Santo del Chianti Classico DOC</span><span class="wt-grapes">Malvasia, Trebbiano — Isole e Olena</span></td>
+          <td><span class="wt-region">Toscana</span></td>
+          <td><span class="wt-vintage">2015</span></td>
+          <td><span class="wt-notes">Dried apricot, walnut, orange peel, unctuous texture. Seven years in caratelli — the holy wine of Italy.</span></td>
+          <td><span class="wt-price">₹8,800</span><div class="wt-rating" aria-label="5 stars"><span>★★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Moscato d'Asti DOCG "Vigneto Sourgal"</span><span class="wt-grapes">Moscato Bianco — Saracco</span></td>
+          <td><span class="wt-region">Piemonte</span></td>
+          <td><span class="wt-vintage">2023</span></td>
+          <td><span class="wt-notes">5% alcohol, effervescent. Peach blossom, orange, apricot. The lightest, most elegant end to an Italian meal.</span></td>
+          <td><span class="wt-price">₹5,200</span><div class="wt-rating" aria-label="4 stars"><span>★★★★</span></div></td>
+        </tr>
+        <tr class="wine-row">
+          <td><span class="wt-name">Marsala Superiore Riserva 10 anni</span><span class="wt-grapes">Grillo, Catarratto — Marco De Bartoli</span></td>
+          <td><span class="wt-region">Marsala, Sicilia</span></td>
+          <td><span class="wt-vintage">Solera</span></td>
+          <td><span class="wt-notes">Oxidative, nutty, dried fruit, caramel, almonds. The wine that made Marsala noble again.</span></td>
+          <td><span class="wt-price">₹6,400</span><div class="wt-rating" aria-label="5 stars"><span>★★★★★</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BY THE GLASS -->
+  <div class="wine-section" id="glass" role="tabpanel">
+    <div class="wine-section-intro reveal">
+      <div>
+        <span class="wine-region-label">By the Glass</span>
+        <h3 class="wine-region-title">Al Bicchiere</h3>
+      </div>
+      <p class="wine-region-desc">
+        A rotating selection of 25 wines available by the glass, changed weekly to reflect what is drinking best in the cellar. All poured using Coravin to preserve quality. Priya personally selects each week's pour on Monday morning.
+      </p>
+    </div>
+    <div class="glass-grid reveal stagger">
+      <div class="glass-card">
+        <span class="glass-type">Rossi — Reds</span>
+        <ul class="glass-wines" aria-label="Red wines by the glass">
+          <li class="glass-wine-item">
+            <div><span class="glass-wine-name">Barolo DOCG, Giacomo Conterno</span><span class="glass-wine-info">Nebbiolo · Piemonte · 2018</span></div>
+            <span class="glass-wine-price">₹2,200</span>
+          </li>
+          <li class="glass-wine-item">
+            <div><span class="glass-wine-name">Chianti Classico Riserva, Antinori</span><span class="glass-wine-info">Sangiovese · Toscana · 2019</span></div>
+            <span class="glass-wine-price">₹1,400</span>
+          </li>
+          <li class="glass-wine-item">
+            <div><span class="glass-wine-name">Etna Rosso, Benanti</span><span class="glass-wine-info">Nerello · Sicilia · 2020</span></div>
+            <span class="glass-wine-price">₹1,200</span>
+          </li>
+          <li class="glass-wine-item">
+            <div><span class="glass-wine-name">Primitivo "Sessantanni", San Marzano</span><span class="glass-wine-info">Primitivo · Puglia · 2019</span></div>
+            <span class="glass-wine-price">₹950</span>
+          </li>
+        </ul>
+      </div>
+      <div class="glass-card">
+        <span class="glass-type">Bianchi — Whites</span>
+        <ul class="glass-wines" aria-label="White wines by the glass">
+          <li class="glass-wine-item">
+            <div><span class="glass-wine-name">Greco di Tufo, Mastroberardino</span><span class="glass-wine-info">Greco · Campania · 2021</span></div>
+            <span class="glass-wine-price">₹1,100</span>
+          </li>
+          <li class="glass-wine-item">
+            <div><span class="glass-wine-name">Gavi di Gavi Black Label, La Scolca</span><span class="glass-wine-info">Cortese · Piemonte · 2022</span></div>
+            <span class="glass-wine-price">₹1,000</span>
+          </li>
+          <li class="glass-wine-item">
+            <div><span class="glass-wine-name">Vermentino di Sardegna, Sella &amp; Mosca</span><span class="glass-wine-info">Vermentino · Sardegna · 2022</span></div>
+            <span class="glass-wine-price">₹850</span>
+          </li>
+          <li class="glass-wine-item">
+            <div><span class="glass-wine-name">Soave Classico "La Rocca", Pieropan</span><span class="glass-wine-info">Garganega · Veneto · 2020</span></div>
+            <span class="glass-wine-price">₹1,300</span>
+          </li>
+        </ul>
+      </div>
+      <div class="glass-card">
+        <span class="glass-type">Bollicine &amp; Dolci</span>
+        <ul class="glass-wines" aria-label="Sparkling and sweet wines by the glass">
+          <li class="glass-wine-item">
+            <div><span class="glass-wine-name">Franciacorta Brut, Ca' del Bosco</span><span class="glass-wine-info">Chardonnay · Lombardia · NV</span></div>
+            <span class="glass-wine-price">₹1,600</span>
+          </li>
+          <li class="glass-wine-item">
+            <div><span class="glass-wine-name">Prosecco Cartizze, Nino Franco</span><span class="glass-wine-info">Glera · Veneto · NV</span></div>
+            <span class="glass-wine-price">₹1,100</span>
+          </li>
+          <li class="glass-wine-item">
+            <div><span class="glass-wine-name">Moscato d'Asti, Saracco</span><span class="glass-wine-info">Moscato · Piemonte · 2023</span></div>
+            <span class="glass-wine-price">₹780</span>
+          </li>
+          <li class="glass-wine-item">
+            <div><span class="glass-wine-name">Passito di Pantelleria, Donnafugata</span><span class="glass-wine-info">Zibibbo · Sicilia · 2020 (75ml)</span></div>
+            <span class="glass-wine-price">₹1,400</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-results" id="global-no-results" role="status">
+    <p class="no-results-text">No wines found for your search. Please try a different term.</p>
+  </div>
+</section>
+
+<!-- ─── SOMMELIER PICKS ─── -->
+<section id="somm-picks" aria-labelledby="picks-title">
+  <div class="picks-header">
+    <p class="section-label center reveal">Monthly Selection</p>
+    <h2 class="section-title reveal" id="picks-title">Priya's <em>Picks</em></h2>
+  </div>
+  <div class="picks-grid">
+    <div class="pick-card reveal">
+      <img class="pick-card-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=70" alt="Barolo wine" loading="lazy">
+      <span class="pick-month">May 2025</span>
+      <h3 class="pick-name">Barolo "Monfortino" 2015</h3>
+      <span class="pick-producer">Giacomo Conterno, Piemonte</span>
+      <p class="pick-note">
+        A once-in-a-decade vintage, drinking magnificently right now if decanted four hours. I have been waiting for this bottle to be ready for three years. This month, it finally is.
+      </p>
+      <p class="pick-price">₹32,000 per bottle</p>
+    </div>
+    <div class="pick-card reveal">
+      <img class="pick-card-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=60" alt="Franciacorta sparkling wine" loading="lazy">
+      <span class="pick-month">Summer White</span>
+      <h3 class="pick-name">Franciacorta Riserva "Vittorio Moretti"</h3>
+      <span class="pick-producer">Bellavista, Lombardia</span>
+      <p class="pick-note">
+        As Mumbai temperatures climb, I find myself reaching for this every week. The 2016 has a complexity that matches Champagne at twice the price, and it belongs with our seafood. My summer obsession.
+      </p>
+      <p class="pick-price">₹22,000 per bottle</p>
+    </div>
+    <div class="pick-card reveal">
+      <img class="pick-card-img" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=50" alt="Passito dessert wine" loading="lazy">
+      <span class="pick-month">Hidden Gem</span>
+      <h3 class="pick-name">Etna Rosso "Rovittello" 2020</h3>
+      <span class="pick-producer">Benanti, Sicilia</span>
+      <p class="pick-note">
+        The wine I am pressing into every hand at the moment. Volcanic, ethereal, unlike anything else on our list. Order it with the carpaccio and watch what happens. I promise you will order it again.
+      </p>
+      <p class="pick-price">₹8,400 per bottle</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CELLAR CTA ─── -->
+<div class="cellar-cta">
+  <div class="cellar-cta-inner">
+    <p class="section-label reveal">Private Cellar</p>
+    <h2 class="section-title reveal">Wine <em>Consultation</em></h2>
+    <p class="cellar-cta-text reveal">
+      For private dinners, corporate events, or guests who wish to build a cellar at home — Priya offers personal wine consultations by appointment. She can also source specific bottles from our network of Italian producers, including library vintages not on our regular list.
+    </p>
+    <div class="reveal" style="display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap;">
+      <a href="mailto:wine@imperiale.in" class="btn-primary">Email Priya</a>
+      <a href="ristorante-imperiale.html#reservations" class="btn-secondary">Book a Table</a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer role="contentinfo">
+  <div class="footer-top">
+    <div>
+      <p class="footer-brand-name">Ristorante Imperiale</p>
+      <p class="footer-brand-sub">Dal 1998 — Mumbai</p>
+      <p class="footer-brand-desc">A quarter century of Italian culinary tradition, lovingly preserved and offered to those who seek more than a meal.</p>
+    </div>
+    <div>
+      <p class="footer-col-title">Dining</p>
+      <ul class="footer-col-links">
+        <li><a href="ristorante-imperiale.html#menu">À La Carte</a></li>
+        <li><a href="tasting-menu.html">Tasting Menu</a></li>
+        <li><a href="private-dining.html">Private Dining</a></li>
+        <li><a href="wine-list.html">Wine List</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">About</p>
+      <ul class="footer-col-links">
+        <li><a href="ristorante-imperiale.html#about">Our Story</a></li>
+        <li><a href="ristorante-imperiale.html#chef">Chef Marco</a></li>
+        <li><a href="ristorante-imperiale.html#gallery">Gallery</a></li>
+        <li><a href="ristorante-imperiale.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Newsletter</p>
+      <p style="font-size:0.82rem; color:rgba(244,237,224,0.45); margin-bottom:1rem; line-height:1.7;">Seasonal menus, wine notes &amp; exclusive event invitations.</p>
+      <form class="newsletter-form" id="newsletter-form" aria-label="Newsletter">
+        <input class="newsletter-input" type="email" placeholder="Your email address" required aria-label="Email">
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2025 Ristorante Imperiale. All rights reserved.</p>
+    <ul class="footer-legal">
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="ristorante-imperiale.html">Home</a></li>
+    </ul>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="script.js"></script>
+<script>
+(function () {
+  /* ── Wine filter tabs ── */
+  const filterTabs = document.querySelectorAll('.wine-filter-tab');
+  const wineSections = document.querySelectorAll('.wine-section');
+
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', function () {
+      filterTabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+      wineSections.forEach(s => s.classList.remove('active'));
+      this.classList.add('active');
+      this.setAttribute('aria-selected','true');
+      const target = document.getElementById(this.dataset.section);
+      if (target) {
+        target.classList.add('active');
+        window._reObserve && window._reObserve(target);
+      }
+      // Clear search
+      const si = document.getElementById('wine-search-input');
+      if (si) si.value = '';
+      document.querySelectorAll('.wine-row').forEach(r => r.style.display = '');
+      document.querySelectorAll('.no-results').forEach(n => n.classList.remove('show'));
+    });
+  });
+
+  /* ── Search ── */
+  const searchInput = document.getElementById('wine-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      const q = this.value.toLowerCase().trim();
+      const activeSection = document.querySelector('.wine-section.active');
+      if (!activeSection) return;
+
+      const rows = activeSection.querySelectorAll('.wine-row');
+      let visibleCount = 0;
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const show = !q || text.includes(q);
+        row.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+
+      const noResults = activeSection.querySelector('.no-results') || document.getElementById('global-no-results');
+      if (noResults) noResults.classList.toggle('show', visibleCount === 0 && q.length > 0);
+    });
+  }
+})();
+</script>
+</body>
+</html>

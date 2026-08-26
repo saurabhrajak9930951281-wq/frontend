@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ristorante Imperiale — A Michelin-starred Italian dining experience in Mumbai. Reserve your table for an unforgettable culinary journey.">
+<meta name="keywords" content="Italian restaurant Mumbai, fine dining, Michelin star, Italian cuisine, luxury restaurant">
+<title>Ristorante Imperiale — Fine Italian Dining, Mumbai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080807;
+    --ivory: #f4ede0;
+    --ivory-light: #faf6ef;
+    --gold: #c9a84c;
+    --gold-light: #e2c97e;
+    --gold-dark: #9a7a2e;
+    --wine: #6b1a2a;
+    --wine-light: #8b2a3e;
+    --charcoal: #1a1916;
+    --mid: #2e2d29;
+    --stone: #4a4940;
+    --muted: #7a7060;
+    --font-serif: 'Cinzel', serif;
+    --font-elegant: 'Cormorant Garamond', serif;
+    --font-sans: 'Lato', sans-serif;
+    --transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background-color: var(--black);
+    color: var(--ivory);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  ::selection { background: var(--gold); color: var(--black); }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+
+  /* ─── NAVIGATION ─── */
+  #navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 0 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 80px;
+    transition: background var(--transition-fast), height var(--transition-fast), backdrop-filter var(--transition-fast);
+  }
+  #navbar.scrolled {
+    background: rgba(8, 8, 7, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    height: 66px;
+  }
+  .nav-logo {
+    display: flex; flex-direction: column; align-items: flex-start;
+    text-decoration: none; gap: 0;
+  }
+  .nav-logo-main {
+    font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600;
+    letter-spacing: 0.18em; color: var(--gold);
+    line-height: 1;
+  }
+  .nav-logo-sub {
+    font-family: var(--font-elegant); font-size: 0.72rem; font-weight: 300;
+    letter-spacing: 0.35em; color: var(--ivory); opacity: 0.6;
+    text-transform: uppercase; line-height: 1;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 2.5rem; list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-serif); font-size: 0.68rem; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--ivory);
+    text-decoration: none; opacity: 0.75;
+    position: relative; padding-bottom: 4px;
+    transition: opacity var(--transition-fast), color var(--transition-fast);
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 100%;
+    height: 1px; background: var(--gold);
+    transition: right var(--transition-fast);
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+  .nav-links a:hover::after { right: 0; }
+  .nav-cta {
+    font-family: var(--font-serif); font-size: 0.65rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--gold); background: transparent;
+    border: 1px solid var(--gold); padding: 10px 22px; cursor: pointer;
+    text-decoration: none;
+    transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--black); }
+  .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .nav-burger span { display: block; width: 24px; height: 1px; background: var(--ivory); transition: var(--transition-fast); }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative; height: 100vh; min-height: 700px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80');
+    background-size: cover; background-position: center;
+    transform: scale(1.05);
+    transition: transform 8s ease-out;
+    animation: heroZoom 8s ease-out forwards;
+  }
+  @keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1.0); } }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      160deg,
+      rgba(8,8,7,0.82) 0%,
+      rgba(8,8,7,0.55) 50%,
+      rgba(107,26,42,0.3) 100%
+    );
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center; padding: 0 5vw;
+    max-width: 900px;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-elegant); font-size: 1rem; font-weight: 400;
+    letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold);
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 1s ease forwards 0.4s;
+  }
+  .hero-title {
+    font-family: var(--font-serif); font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 400; letter-spacing: 0.08em; line-height: 1.05;
+    color: var(--ivory); margin: 0.4em 0;
+    opacity: 0; transform: translateY(24px);
+    animation: fadeUp 1s ease forwards 0.65s;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); font-family: var(--font-elegant); font-size: 1.15em; }
+  .hero-divider {
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    margin: 1.2rem auto;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.85s;
+  }
+  .hero-divider::before, .hero-divider::after {
+    content: ''; display: block; width: 60px; height: 1px; background: rgba(201,168,76,0.5);
+  }
+  .hero-diamond { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
+  .hero-tagline {
+    font-family: var(--font-elegant); font-size: clamp(1.05rem, 2vw, 1.4rem);
+    font-weight: 300; letter-spacing: 0.06em; color: rgba(244,237,224,0.8);
+    font-style: italic;
+    opacity: 0; animation: fadeUp 1s ease forwards 1s;
+  }
+  .hero-actions {
+    display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+    margin-top: 2.5rem;
+    opacity: 0; animation: fadeUp 1s ease forwards 1.2s;
+  }
+  .btn-primary {
+    font-family: var(--font-serif); font-size: 0.68rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--black); background: var(--gold);
+    border: none; padding: 16px 40px; cursor: pointer; text-decoration: none;
+    display: inline-block;
+    transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.35); }
+  .btn-secondary {
+    font-family: var(--font-serif); font-size: 0.68rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--ivory); background: transparent;
+    border: 1px solid rgba(244,237,224,0.35); padding: 15px 36px; cursor: pointer; text-decoration: none;
+    display: inline-block;
+    transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    opacity: 0; animation: fadeIn 1s ease forwards 1.8s;
+  }
+  .hero-scroll span {
+    font-family: var(--font-serif); font-size: 0.58rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: rgba(244,237,224,0.5);
+  }
+  .scroll-line {
+    width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(201,168,76,0.7), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left {
+    opacity: 0; transform: translateX(-40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0; transform: translateX(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* ─── SECTION SHARED ─── */
+  section { padding: 7rem 5vw; }
+  .section-label {
+    font-family: var(--font-serif); font-size: 0.62rem; letter-spacing: 0.42em;
+    text-transform: uppercase; color: var(--gold);
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+  }
+  .section-label::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--gold);
+  }
+  .section-title {
+    font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 400; letter-spacing: 0.06em; color: var(--ivory); line-height: 1.15;
+  }
+  .section-title em {
+    font-style: italic; font-family: var(--font-elegant); color: var(--gold); font-size: 1.1em;
+  }
+  .gold-divider {
+    width: 50px; height: 1px; background: var(--gold); margin: 2rem 0;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--charcoal); position: relative; overflow: hidden; }
+  #about::before {
+    content: 'IMPERIALE'; position: absolute;
+    font-family: var(--font-serif); font-size: 18vw; font-weight: 700;
+    color: rgba(201,168,76,0.03); top: 50%; left: 50%;
+    transform: translate(-50%, -50%); white-space: nowrap; pointer-events: none;
+    letter-spacing: 0.1em;
+  }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 7rem;
+    align-items: center; max-width: 1300px; margin: 0 auto; position: relative; z-index: 1;
+  }
+  .about-image-wrap {
+    position: relative; aspect-ratio: 3/4; overflow: hidden;
+  }
+  .about-image-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+  .about-image-wrap:hover img { transform: scale(1.04); }
+  .about-image-accent {
+    position: absolute; bottom: -2rem; right: -2rem;
+    width: 180px; height: 180px; border: 1px solid var(--gold);
+    z-index: -1;
+  }
+  .about-text { padding: 2rem 0; }
+  .about-lead {
+    font-family: var(--font-elegant); font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 300; font-style: italic; color: var(--ivory);
+    line-height: 1.5; margin-bottom: 1.8rem;
+  }
+  .about-body {
+    font-size: 0.92rem; color: rgba(244,237,224,0.65);
+    line-height: 1.9; margin-bottom: 1.5rem;
+  }
+  .about-stats {
+    display: flex; gap: 3rem; margin-top: 2.5rem; padding-top: 2.5rem;
+    border-top: 1px solid rgba(201,168,76,0.2);
+  }
+  .stat-item { text-align: left; }
+  .stat-num {
+    font-family: var(--font-serif); font-size: 2.2rem; font-weight: 400;
+    color: var(--gold); line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(244,237,224,0.5); margin-top: 0.4rem; display: block;
+  }
+
+  /* ─── MENU ─── */
+  #menu { background: var(--black); }
+  .menu-header {
+    text-align: center; max-width: 600px; margin: 0 auto 5rem;
+  }
+  .menu-header .section-label { justify-content: center; }
+  .menu-header .section-label::before { display: none; }
+  .menu-tabs {
+    display: flex; justify-content: center; flex-wrap: wrap;
+    gap: 0; margin-bottom: 4rem;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .menu-tab {
+    font-family: var(--font-serif); font-size: 0.68rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: rgba(244,237,224,0.5);
+    padding: 1rem 1.8rem; cursor: pointer; background: transparent;
+    border: none; border-bottom: 2px solid transparent;
+    margin-bottom: -1px; transition: color var(--transition-fast), border-color var(--transition-fast);
+  }
+  .menu-tab:hover { color: var(--gold); }
+  .menu-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .menu-category { display: none; max-width: 900px; margin: 0 auto; }
+  .menu-category.active { display: block; }
+  .menu-category-title {
+    font-family: var(--font-elegant); font-size: 0.8rem; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--gold); text-align: center;
+    margin-bottom: 3rem; font-style: italic;
+  }
+  .menu-items { display: grid; gap: 0; }
+  .menu-item {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+    position: relative; overflow: hidden;
+    transition: padding var(--transition-fast);
+  }
+  .menu-item::before {
+    content: ''; position: absolute; left: -100%; top: 0; bottom: 0;
+    width: 100%; background: rgba(201,168,76,0.04);
+    transition: left var(--transition-fast);
+  }
+  .menu-item:hover::before { left: 0; }
+  .menu-item:hover { padding-left: 1rem; }
+  .menu-item-left { flex: 1; padding-right: 2rem; }
+  .menu-item-name {
+    font-family: var(--font-elegant); font-size: clamp(1.1rem, 2vw, 1.3rem);
+    font-weight: 500; color: var(--ivory); letter-spacing: 0.02em;
+    margin-bottom: 0.35rem;
+  }
+  .menu-item-desc {
+    font-size: 0.82rem; color: rgba(244,237,224,0.5);
+    font-style: italic; line-height: 1.6;
+    font-family: var(--font-elegant); font-weight: 300;
+  }
+  .menu-item-price {
+    font-family: var(--font-serif); font-size: 0.9rem;
+    color: var(--gold); letter-spacing: 0.06em; white-space: nowrap;
+    padding-top: 4px;
+  }
+  .menu-item-tag {
+    display: inline-block; font-family: var(--font-serif); font-size: 0.52rem;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.4); padding: 2px 8px;
+    margin-left: 0.6rem; vertical-align: middle;
+  }
+
+  /* ─── CHEF ─── */
+  #chef { background: var(--charcoal); overflow: hidden; }
+  .chef-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8rem;
+    align-items: center; max-width: 1300px; margin: 0 auto;
+  }
+  .chef-image-wrap {
+    position: relative;
+  }
+  .chef-image-frame {
+    position: relative; z-index: 1;
+    aspect-ratio: 4/5; overflow: hidden;
+  }
+  .chef-image-frame img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(20%);
+    transition: filter 0.5s ease, transform 0.8s ease;
+  }
+  .chef-image-frame:hover img { filter: grayscale(0%); transform: scale(1.03); }
+  .chef-award {
+    position: absolute; bottom: 2.5rem; left: -2.5rem; z-index: 2;
+    background: var(--gold); color: var(--black);
+    padding: 1.2rem 1.6rem; text-align: center;
+    min-width: 130px;
+  }
+  .chef-award-num {
+    font-family: var(--font-serif); font-size: 2rem; font-weight: 600; display: block; line-height: 1;
+  }
+  .chef-award-text {
+    font-family: var(--font-serif); font-size: 0.55rem; letter-spacing: 0.2em;
+    text-transform: uppercase; display: block; margin-top: 4px;
+  }
+  .chef-text { padding: 2rem 0; }
+  .chef-title {
+    font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 400; color: var(--ivory); letter-spacing: 0.06em; margin-bottom: 0.2rem;
+  }
+  .chef-subtitle {
+    font-family: var(--font-elegant); font-size: 1rem; font-style: italic;
+    color: var(--gold); letter-spacing: 0.08em; margin-bottom: 1.5rem;
+  }
+  .chef-bio {
+    font-size: 0.9rem; color: rgba(244,237,224,0.65); line-height: 1.9; margin-bottom: 1.5rem;
+  }
+  .chef-signature-dishes { margin-top: 2.5rem; }
+  .chef-sig-label {
+    font-family: var(--font-serif); font-size: 0.6rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+  }
+  .sig-dish-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .sig-dish-list li {
+    font-family: var(--font-elegant); font-size: 1.05rem; font-style: italic;
+    color: rgba(244,237,224,0.8);
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .sig-dish-list li::before {
+    content: ''; display: block; width: 18px; height: 1px; background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ─── GALLERY ─── */
+  #gallery { background: var(--black); padding-bottom: 0; }
+  .gallery-header {
+    text-align: center; margin-bottom: 4rem;
+  }
+  .gallery-header .section-label { justify-content: center; }
+  .gallery-header .section-label::before { display: none; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 6px;
+  }
+  .gallery-item {
+    overflow: hidden; position: relative; cursor: pointer;
+  }
+  .gallery-item:nth-child(1) { grid-column: span 5; grid-row: span 2; aspect-ratio: 4/5; }
+  .gallery-item:nth-child(2) { grid-column: span 7; aspect-ratio: 16/9; }
+  .gallery-item:nth-child(3) { grid-column: span 4; }
+  .gallery-item:nth-child(4) { grid-column: span 3; }
+  .gallery-item:nth-child(5) { grid-column: span 5; }
+  .gallery-item:nth-child(6) { grid-column: span 7; aspect-ratio: 16/7; }
+  .gallery-item:nth-child(7) { grid-column: span 5; }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+    filter: brightness(0.88);
+  }
+  .gallery-item:hover img { transform: scale(1.06); filter: brightness(1); }
+  .gallery-item-overlay {
+    position: absolute; inset: 0;
+    background: rgba(8,8,7,0);
+    transition: background 0.4s ease;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .gallery-item:hover .gallery-item-overlay { background: rgba(8,8,7,0.25); }
+  .gallery-zoom {
+    width: 48px; height: 48px;
+    border: 1px solid rgba(201,168,76,0.8);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: scale(0.7);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    color: var(--gold); font-size: 1.2rem;
+  }
+  .gallery-item:hover .gallery-zoom { opacity: 1; transform: scale(1); }
+
+  /* ─── RESERVATIONS ─── */
+  #reservations {
+    background: var(--charcoal); position: relative; overflow: hidden;
+  }
+  #reservations::after {
+    content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 40%;
+    background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80');
+    background-size: cover; background-position: center;
+    opacity: 0.12;
+  }
+  .reservations-inner {
+    max-width: 700px; position: relative; z-index: 1;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.6rem; }
+  .form-group.full { grid-column: span 2; }
+  .form-label {
+    font-family: var(--font-serif); font-size: 0.6rem; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .form-input {
+    background: transparent; border: none; border-bottom: 1px solid rgba(244,237,224,0.2);
+    color: var(--ivory); font-family: var(--font-sans); font-size: 0.9rem;
+    font-weight: 300; padding: 0.75rem 0;
+    transition: border-color var(--transition-fast);
+    outline: none; width: 100%;
+    -webkit-appearance: none; appearance: none;
+  }
+  .form-input:focus { border-bottom-color: var(--gold); }
+  .form-input::placeholder { color: rgba(244,237,224,0.3); }
+  .form-input option { background: var(--charcoal); color: var(--ivory); }
+  .form-select {
+    background: transparent; border: none; border-bottom: 1px solid rgba(244,237,224,0.2);
+    color: var(--ivory); font-family: var(--font-sans); font-size: 0.9rem;
+    font-weight: 300; padding: 0.75rem 0;
+    transition: border-color var(--transition-fast);
+    outline: none; width: 100%; cursor: pointer;
+    -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 0 center;
+  }
+  .form-select:focus { border-bottom-color: var(--gold); }
+  .form-select option { background: var(--charcoal); color: var(--ivory); }
+  .form-note {
+    font-size: 0.78rem; color: rgba(244,237,224,0.4); font-style: italic;
+    font-family: var(--font-elegant); margin-top: 0.3rem;
+  }
+  .form-submit {
+    margin-top: 2.5rem; display: flex; align-items: center; gap: 2rem;
+  }
+  .btn-reserve {
+    font-family: var(--font-serif); font-size: 0.68rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--black); background: var(--gold);
+    border: none; padding: 18px 50px; cursor: pointer;
+    transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .btn-reserve:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.4); }
+  .form-tel {
+    font-family: var(--font-elegant); font-size: 0.85rem;
+    font-style: italic; color: rgba(244,237,224,0.45);
+  }
+  .form-tel a { color: var(--gold); text-decoration: none; }
+  .form-tel a:hover { text-decoration: underline; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--black); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+    max-width: 1300px; margin: 0 auto; align-items: start;
+  }
+  .contact-info { padding-top: 1rem; }
+  .contact-block { margin-bottom: 2.5rem; }
+  .contact-block-label {
+    font-family: var(--font-serif); font-size: 0.6rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem;
+  }
+  .contact-block-text {
+    font-size: 0.9rem; color: rgba(244,237,224,0.7);
+    line-height: 1.9;
+  }
+  .contact-block-text a {
+    color: var(--gold); text-decoration: none;
+    transition: opacity var(--transition-fast);
+  }
+  .contact-block-text a:hover { opacity: 0.7; }
+  .hours-row {
+    display: flex; justify-content: space-between;
+    font-size: 0.85rem; color: rgba(244,237,224,0.65);
+    padding: 0.4rem 0; border-bottom: 1px solid rgba(201,168,76,0.08);
+  }
+  .hours-row .day { font-weight: 400; }
+  .hours-row .time { color: rgba(244,237,224,0.45); font-family: var(--font-elegant); font-style: italic; }
+  .social-links {
+    display: flex; gap: 1.2rem; margin-top: 0.5rem;
+  }
+  .social-link {
+    width: 42px; height: 42px;
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); text-decoration: none; font-size: 0.85rem;
+    font-family: var(--font-serif); letter-spacing: 0.05em;
+    transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+  }
+  .social-link:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); transform: translateY(-2px); }
+  .map-container {
+    height: 460px; overflow: hidden; position: relative;
+    filter: grayscale(40%) contrast(1.1);
+  }
+  .map-container iframe {
+    width: 100%; height: 100%; border: none;
+  }
+  .map-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+    background: linear-gradient(to top, var(--black), transparent);
+    pointer-events: none;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--charcoal);
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 5rem 5vw 3rem;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 4rem; margin-bottom: 4rem;
+  }
+  .footer-brand-name {
+    font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600;
+    letter-spacing: 0.2em; color: var(--gold); margin-bottom: 0.3rem;
+  }
+  .footer-brand-sub {
+    font-family: var(--font-elegant); font-size: 0.78rem; letter-spacing: 0.3em;
+    color: rgba(244,237,224,0.4); text-transform: uppercase; font-style: italic;
+    margin-bottom: 1.2rem;
+  }
+  .footer-brand-desc {
+    font-size: 0.83rem; color: rgba(244,237,224,0.45); line-height: 1.85;
+  }
+  .footer-col-title {
+    font-family: var(--font-serif); font-size: 0.6rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem;
+  }
+  .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-col-links a {
+    font-size: 0.83rem; color: rgba(244,237,224,0.5); text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  .footer-col-links a:hover { color: var(--gold); }
+  .newsletter-form { display: flex; flex-direction: column; gap: 0.8rem; }
+  .newsletter-input {
+    background: transparent; border: none; border-bottom: 1px solid rgba(244,237,224,0.2);
+    color: var(--ivory); font-family: var(--font-sans); font-size: 0.85rem;
+    font-weight: 300; padding: 0.7rem 0; outline: none;
+    transition: border-color var(--transition-fast);
+  }
+  .newsletter-input:focus { border-bottom-color: var(--gold); }
+  .newsletter-input::placeholder { color: rgba(244,237,224,0.3); }
+  .newsletter-btn {
+    font-family: var(--font-serif); font-size: 0.6rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--gold); background: transparent;
+    border: 1px solid var(--gold); padding: 11px 22px; cursor: pointer;
+    align-self: flex-start; margin-top: 0.3rem;
+    transition: background var(--transition-fast), color var(--transition-fast);
+  }
+  .newsletter-btn:hover { background: var(--gold); color: var(--black); }
+  .footer-bottom {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding-top: 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-copy {
+    font-size: 0.75rem; color: rgba(244,237,224,0.3);
+    font-family: var(--font-elegant); font-style: italic;
+  }
+  .footer-legal {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .footer-legal a {
+    font-size: 0.72rem; letter-spacing: 0.1em; color: rgba(244,237,224,0.3);
+    text-decoration: none; transition: color var(--transition-fast);
+  }
+  .footer-legal a:hover { color: var(--gold); }
+
+  /* ─── LIGHTBOX ─── */
+  #lightbox {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(8,8,7,0.95);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  #lightbox.open { opacity: 1; pointer-events: all; }
+  #lightbox img {
+    max-width: 90vw; max-height: 90vh; object-fit: contain;
+    transform: scale(0.92); transition: transform 0.4s ease;
+  }
+  #lightbox.open img { transform: scale(1); }
+  .lightbox-close {
+    position: absolute; top: 2rem; right: 2.5rem;
+    font-family: var(--font-serif); font-size: 0.65rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: rgba(244,237,224,0.5);
+    cursor: pointer; background: none; border: none;
+    transition: color var(--transition-fast);
+  }
+  .lightbox-close:hover { color: var(--gold); }
+
+  /* ─── MOBILE NAV ─── */
+  #mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(8,8,7,0.97);
+    backdrop-filter: blur(20px);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 2.5rem;
+  }
+  #mobile-menu.open { display: flex; }
+  #mobile-menu a {
+    font-family: var(--font-serif); font-size: 1.4rem; font-weight: 400;
+    letter-spacing: 0.2em; color: var(--ivory); text-decoration: none;
+    opacity: 0.75; transition: color var(--transition-fast), opacity var(--transition-fast);
+  }
+  #mobile-menu a:hover { color: var(--gold); opacity: 1; }
+
+  /* ─── SUCCESS TOAST ─── */
+  #toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 5000;
+    background: var(--gold); color: var(--black);
+    font-family: var(--font-serif); font-size: 0.72rem; letter-spacing: 0.18em;
+    text-transform: uppercase; padding: 1rem 2rem;
+    transform: translateY(100px); opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    pointer-events: none;
+  }
+  #toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .about-grid, .chef-grid { grid-template-columns: 1fr; gap: 4rem; }
+    .chef-image-wrap { max-width: 500px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .gallery-grid { gap: 4px; }
+    .gallery-item:nth-child(1) { grid-column: span 6; }
+    .gallery-item:nth-child(2) { grid-column: span 6; }
+    .gallery-item:nth-child(3),
+    .gallery-item:nth-child(4),
+    .gallery-item:nth-child(5) { grid-column: span 4; }
+    .gallery-item:nth-child(6),
+    .gallery-item:nth-child(7) { grid-column: span 6; }
+  }
+  @media (max-width: 768px) {
+    section { padding: 5rem 6vw; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-burger { display: flex; }
+    .hero-actions { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-secondary { width: 100%; max-width: 280px; text-align: center; }
+    .about-stats { gap: 2rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: span 1; }
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .footer-top { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .gallery-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+    }
+    .gallery-item { grid-column: span 1 !important; grid-row: span 1 !important; aspect-ratio: 1 !important; }
+    .chef-award { left: 0.5rem; bottom: 1rem; }
+    .menu-tabs { gap: 0; }
+    .menu-tab { padding: 0.75rem 1rem; font-size: 0.6rem; }
+    .about-image-accent { display: none; }
+  }
+  @media (max-width: 480px) {
+    .nav-logo-main { font-size: 0.95rem; }
+    .hero-title { font-size: 2.4rem; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-item { grid-column: span 1 !important; aspect-ratio: 4/3 !important; }
+    .about-stats { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─── -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <a href="#hero" class="nav-logo" aria-label="Ristorante Imperiale - Home">
+    <span class="nav-logo-main">Ristorante Imperiale</span>
+    <span class="nav-logo-sub">Mumbai &middot; Dal 1998</span>
+  </a>
+  <ul class="nav-links" aria-label="Navigation links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#menu">Menu</a></li>
+    <li><a href="index.html#chef">Our Chef</a></li>
+    <li><a href="index.html#gallery">Gallery</a></li>
+    <li><a href="index.html#contact">Contact</a></li><li><a href="tasting-menu.html">Tasting Menu</a></li><li><a href="private-dining.html">Private Dining</a></li><li><a href="wine-list.html">Wine</a></li>
+  </ul>
+  <a href="index.html#reservations" class="nav-cta" aria-label="Reserve a Table">Reserve</a>
+  <button class="nav-burger" id="burger-btn" aria-label="Open mobile menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ─── MOBILE MENU ─── -->
+<div id="mobile-menu" role="dialog" aria-label="Mobile navigation" aria-hidden="true">
+  <a href="index.html#about" class="mobile-link">About</a>
+  <a href="index.html#menu" class="mobile-link">Menu</a>
+  <a href="index.html#chef" class="mobile-link">Our Chef</a>
+  <a href="index.html#gallery" class="mobile-link">Gallery</a>
+  <a href="index.html#reservations" class="mobile-link">Reservations</a>
+  <a href="index.html#contact" class="mobile-link">Contact</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section id="hero" aria-label="Hero section">
+  <div class="hero-bg" role="img" aria-label="Elegant fine dining interior"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Est. 1998 &nbsp;&middot;&nbsp; Mumbai, India</p>
+    <h1 class="hero-title">Where <em>Italia</em><br>Meets Eternity</h1>
+    <div class="hero-divider" aria-hidden="true">
+      <span class="hero-diamond"></span>
+    </div>
+    <p class="hero-tagline">A reverent journey through the flavours of the old country,<br>composed for those who understand the art of dining.</p>
+    <div class="hero-actions">
+      <a href="index.html#reservations" class="btn-primary">Reserve a Table</a>
+      <a href="index.html#menu" class="btn-secondary">Explore the Menu</a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about" aria-labelledby="about-title">
+  <div class="about-grid">
+    <div class="about-image-wrap reveal-left">
+      <img
+        src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80"
+        alt="Intimate candlelit dining room at Ristorante Imperiale"
+        loading="lazy"
+      >
+      <div class="about-image-accent" aria-hidden="true"></div>
+    </div>
+    <div class="about-text reveal-right">
+      <p class="section-label">Our Heritage</p>
+      <h2 class="section-title" id="about-title">A Quarter Century<br>of <em>La Dolce Vita</em></h2>
+      <div class="gold-divider" aria-hidden="true"></div>
+      <p class="about-lead">
+        "Food is not merely sustenance. It is memory, love, and the passage of time made edible."
+      </p>
+      <p class="about-body">
+        Founded in 1998 by the Marchetti family, Ristorante Imperiale was born from a single conviction: that authentic Italian cuisine, prepared with devotion and the finest ingredients flown from Emilia-Romagna, could transport a diner from the chaos of Mumbai to the quiet beauty of a Tuscan evening.
+      </p>
+      <p class="about-body">
+        We source our truffles from Umbria, our San Marzano tomatoes from Campania, and our aged Parmigiano-Reggiano from the same consortium that has served us for two decades. Every element on your plate carries a provenance, a story, and an intention.
+      </p>
+      <div class="about-stats" role="list">
+        <div class="stat-item" role="listitem">
+          <span class="stat-num">25+</span>
+          <span class="stat-label">Years of Excellence</span>
+        </div>
+        <div class="stat-item" role="listitem">
+          <span class="stat-num">2</span>
+          <span class="stat-label">Michelin Stars</span>
+        </div>
+        <div class="stat-item" role="listitem">
+          <span class="stat-num">48</span>
+          <span class="stat-label">Covers per Evening</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MENU ─── -->
+<section id="menu" aria-labelledby="menu-title">
+  <div class="menu-header reveal">
+    <p class="section-label">La Nostra Cucina</p>
+    <h2 class="section-title" id="menu-title">The <em>Menu</em></h2>
+    <p style="font-size:0.9rem; color:rgba(244,237,224,0.5); margin-top:1rem; font-family:var(--font-elegant); font-style:italic;">
+      Our menu changes seasonally to honour the rhythms of the Italian terroir.
+    </p>
+  </div>
+  <div class="menu-tabs reveal" role="tablist" aria-label="Menu categories">
+    <button class="menu-tab active" data-category="antipasti" role="tab" aria-selected="true" aria-controls="antipasti">Antipasti</button>
+    <button class="menu-tab" data-category="pasta" role="tab" aria-selected="false" aria-controls="pasta">Pasta &amp; Risotto</button>
+    <button class="menu-tab" data-category="pizza" role="tab" aria-selected="false" aria-controls="pizza">Pizza</button>
+    <button class="menu-tab" data-category="desserts" role="tab" aria-selected="false" aria-controls="desserts">Desserts</button>
+    <button class="menu-tab" data-category="wine" role="tab" aria-selected="false" aria-controls="wine">Wine</button>
+  </div>
+
+  <!-- ANTIPASTI -->
+  <div class="menu-category active" id="antipasti" role="tabpanel" aria-label="Antipasti menu">
+    <p class="menu-category-title">To Begin — Cominciare</p>
+    <div class="menu-items">
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Carpaccio di Manzo al Tartufo <span class="menu-item-tag">Signature</span></p>
+          <p class="menu-item-desc">Paper-thin wagyu beef, shaved Périgord truffle, wild rocket, aged Parmigiano, cold-pressed Sicilian olive oil</p>
+        </div>
+        <p class="menu-item-price">₹2,200</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Burrata di Puglia con Pomodori del Pendolo</p>
+          <p class="menu-item-desc">Hand-stretched Apulian burrata, heritage Piennolo cherry tomatoes, Genovese basil oil, Trapani sea salt</p>
+        </div>
+        <p class="menu-item-price">₹1,600</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Polpo alla Griglia con Patate Schiacciate</p>
+          <p class="menu-item-desc">Galician octopus braised for four hours, charcoal-grilled, crushed Avola almonds, Calabrian chilli, smoked paprika emulsion</p>
+        </div>
+        <p class="menu-item-price">₹2,400</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Crostini al Fegato d'Oca</p>
+          <p class="menu-item-desc">House-made sourdough, seared duck foie gras torchon, Moscato d'Asti gel, aged balsamic from Modena IGP</p>
+        </div>
+        <p class="menu-item-price">₹2,800</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Vitello Tonnato Tradizionale</p>
+          <p class="menu-item-desc">Cold-roasted rose veal, silken tuna &amp; caper sauce, salted Pantelleria capers, crispy amaranth</p>
+        </div>
+        <p class="menu-item-price">₹1,900</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASTA & RISOTTO -->
+  <div class="menu-category" id="pasta" role="tabpanel" aria-label="Pasta and Risotto menu">
+    <p class="menu-category-title">The Soul of Italy — L'Anima</p>
+    <div class="menu-items">
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Risotto al Tartufo Nero di Norcia <span class="menu-item-tag">Signature</span></p>
+          <p class="menu-item-desc">Carnaroli riserva, fresh Norcia black truffle, 48-month aged Parmigiano, Isigny butter, gold leaf</p>
+        </div>
+        <p class="menu-item-price">₹3,800</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Cacio e Pepe con Scampi dell'Adriatico</p>
+          <p class="menu-item-desc">Tonnarelli pasta, aged Pecorino Romano, Tellicherry black pepper, flame-kissed Adriatic langoustines, chervil</p>
+        </div>
+        <p class="menu-item-price">₹2,900</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Pappardelle al Ragù di Cinghiale</p>
+          <p class="menu-item-desc">Bronze-extruded egg pappardelle, slow-braised wild boar ragu, juniper, rosemary, Chianti Classico, ricotta salata</p>
+        </div>
+        <p class="menu-item-price">₹2,400</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Tagliolini al Caviale Oscietra <span class="menu-item-tag">Prestige</span></p>
+          <p class="menu-item-desc">Hand-rolled egg tagliolini, Oscietra caviar, crème fraîche, preserved lemon, champagne butter</p>
+        </div>
+        <p class="menu-item-price">₹6,500</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Ravioli di Ricotta e Spinaci al Burro e Salvia</p>
+          <p class="menu-item-desc">Hand-pleated ricotta &amp; seasonal spinach ravioli, brown butter, Sicilian almonds, mountain sage, pine nut crumble</p>
+        </div>
+        <p class="menu-item-price">₹1,900</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIZZA -->
+  <div class="menu-category" id="pizza" role="tabpanel" aria-label="Pizza menu">
+    <p class="menu-category-title">Forni di Napoli — From Our Wood Fire</p>
+    <div class="menu-items">
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Margherita DOP <span class="menu-item-tag">Classic</span></p>
+          <p class="menu-item-desc">San Marzano DOP tomatoes, Fior di Latte Mozzarella, Genovese basil DOP, cold-pressed extra-virgin olive oil. 72-hour cold ferment dough.</p>
+        </div>
+        <p class="menu-item-price">₹1,400</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Tartufo e Fontina d'Aosta</p>
+          <p class="menu-item-desc">Fontina Val d'Aosta, shaved summer truffle, truffle honey, crispy guanciale, rosemary-infused oil</p>
+        </div>
+        <p class="menu-item-price">₹2,600</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Diavola Piccante</p>
+          <p class="menu-item-desc">San Marzano tomato, Mozzarella di Bufala DOP, Calabrian nduja, Ventricina salumi, Gaeta olives, fresh chilli</p>
+        </div>
+        <p class="menu-item-price">₹1,800</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Bianca ai Frutti di Mare</p>
+          <p class="menu-item-desc">White base, Mozzarella di Bufala, tiger prawns, Sicilian clams, calamari, garlic, chilli, lemon gremolata</p>
+        </div>
+        <p class="menu-item-price">₹2,200</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESSERTS -->
+  <div class="menu-category" id="desserts" role="tabpanel" aria-label="Desserts menu">
+    <p class="menu-category-title">The Final Act — Il Finale</p>
+    <div class="menu-items">
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Tiramisù della Casa <span class="menu-item-tag">Classic</span></p>
+          <p class="menu-item-desc">Mascarpone di Lodi, Savoiardi, single-origin espresso, aged Marsala Superiore, Valrhona cocoa powder</p>
+        </div>
+        <p class="menu-item-price">₹950</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Panna Cotta al Limoncello di Sorrento</p>
+          <p class="menu-item-desc">Silken Piemonte cream, Sorrento lemon essence, Limoncello gel, candied bergamot, jasmine tuile</p>
+        </div>
+        <p class="menu-item-price">₹850</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Cannolo Siciliano al Momento <span class="menu-item-tag">Signature</span></p>
+          <p class="menu-item-desc">Fried-to-order Sicilian shell, sheep's milk ricotta, candied Bronte pistachios, Modica dark chocolate chip</p>
+        </div>
+        <p class="menu-item-price">₹1,100</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Soufflé al Cioccolato Valrhona</p>
+          <p class="menu-item-desc">Guanaja 70% dark chocolate, molten heart, Fleur de Sel, vanilla gelato, praline feuilletine</p>
+        </div>
+        <p class="menu-item-price">₹1,400</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WINE -->
+  <div class="menu-category" id="wine" role="tabpanel" aria-label="Wine menu">
+    <p class="menu-category-title">La Cantina — Our Cellar Selection</p>
+    <div class="menu-items">
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Barolo DOCG 2018 — Giacomo Conterno</p>
+          <p class="menu-item-desc">Nebbiolo. Langhe, Piemonte. Full-bodied, tar and dried roses, exceptional tannic structure. 36-month cask-aged.</p>
+        </div>
+        <p class="menu-item-price">₹12,500</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Chianti Classico Gran Selezione 2019 — Antinori</p>
+          <p class="menu-item-desc">Sangiovese. Tuscany. Violet and cedar, fine acidity, complex earthy minerality with a velvet finish.</p>
+        </div>
+        <p class="menu-item-price">₹8,500</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Franciacorta Brut DOCG — Ca' del Bosco</p>
+          <p class="menu-item-desc">Chardonnay, Pinot Nero. Lombardy. Champagne method. Fine perlage, brioche, ripe citrus, mineral freshness.</p>
+        </div>
+        <p class="menu-item-price">₹9,800</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Amarone della Valpolicella DOCG 2016 — Masi <span class="menu-item-tag">Prestige</span></p>
+          <p class="menu-item-desc">Corvina, Molinara. Veneto. Dried grape method. Dark chocolate, dried fig, tobacco leaf. Power with elegance.</p>
+        </div>
+        <p class="menu-item-price">₹16,500</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-left">
+          <p class="menu-item-name">Gavi di Gavi DOCG 2022 — La Scolca</p>
+          <p class="menu-item-desc">Cortese. Piemonte. Crisp and luminous. Stone fruits, green apple, almond blossom. Ideal with seafood.</p>
+        </div>
+        <p class="menu-item-price">₹6,200</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CHEF ─── -->
+<section id="chef" aria-labelledby="chef-title">
+  <div class="chef-grid">
+    <div class="chef-image-wrap reveal-left">
+      <div class="chef-image-frame">
+        <img
+          src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=700&q=80"
+          alt="Executive Chef Marco Bellini at Ristorante Imperiale"
+          loading="lazy"
+        >
+      </div>
+      <div class="chef-award" aria-label="2 Michelin Stars">
+        <span class="chef-award-num">2</span>
+        <span class="chef-award-text">Michelin Stars</span>
+      </div>
+    </div>
+    <div class="chef-text reveal-right">
+      <p class="section-label">Il Maestro</p>
+      <h2 class="chef-title" id="chef-title">Chef Marco Bellini</h2>
+      <p class="chef-subtitle">Executive Chef &amp; Patron</p>
+      <p class="chef-bio">
+        Born in Bologna to a family of restaurateurs, Marco Bellini spent his formative years in the kitchen of his grandmother, learning that food is not a performance — it is a conversation between the cook, the land, and the diner.
+      </p>
+      <p class="chef-bio">
+        Trained under Massimo Bottura at Osteria Francescana and later at Michel Bras in Laguiole, Chef Bellini returned to India in 2006 with a vision that has since become Ristorante Imperiale: Italian cooking in its most honest, elevated form, reimagined for the sensibility of the Indian palate without ever compromising the soul of the original.
+      </p>
+      <p class="chef-bio">
+        His tasting menu — eight courses that take you from the Alps to the Sicilian coast — changes with each season. His philosophy is unyielding: the best ingredient, cooked with the least interference, presented with the utmost intention.
+      </p>
+      <div class="chef-signature-dishes">
+        <p class="chef-sig-label">Signature Creations</p>
+        <ul class="sig-dish-list">
+          <li>Risotto al Tartufo Nero di Norcia</li>
+          <li>Tagliolini al Caviale Oscietra</li>
+          <li>Carpaccio di Manzo al Tartufo</li>
+          <li>Soufflé al Cioccolato Valrhona</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GALLERY ─── -->
+<section id="gallery" aria-labelledby="gallery-title">
+  <div class="gallery-header reveal">
+    <p class="section-label">La Galleria</p>
+    <h2 class="section-title" id="gallery-title">Moments of <em>Bellezza</em></h2>
+  </div>
+  <div class="gallery-grid" role="list">
+    <div class="gallery-item reveal" role="listitem" tabindex="0" aria-label="View image: Restaurant Interior">
+      <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80" alt="Elegant restaurant dining room" loading="lazy">
+      <div class="gallery-item-overlay"><div class="gallery-zoom">+</div></div>
+    </div>
+    <div class="gallery-item reveal" role="listitem" tabindex="0" aria-label="View image: Pasta dish">
+      <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=800&q=80" alt="Handmade pasta with truffle" loading="lazy">
+      <div class="gallery-item-overlay"><div class="gallery-zoom">+</div></div>
+    </div>
+    <div class="gallery-item reveal" role="listitem" tabindex="0" aria-label="View image: Fine dining plate">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Artfully plated fine dining dish" loading="lazy">
+      <div class="gallery-item-overlay"><div class="gallery-zoom">+</div></div>
+    </div>
+    <div class="gallery-item reveal" role="listitem" tabindex="0" aria-label="View image: Wine">
+      <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80" alt="Italian wine selection" loading="lazy">
+      <div class="gallery-item-overlay"><div class="gallery-zoom">+</div></div>
+    </div>
+    <div class="gallery-item reveal" role="listitem" tabindex="0" aria-label="View image: Dessert">
+      <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=700&q=80" alt="Artisanal Italian dessert" loading="lazy">
+      <div class="gallery-item-overlay"><div class="gallery-zoom">+</div></div>
+    </div>
+    <div class="gallery-item reveal" role="listitem" tabindex="0" aria-label="View image: Chef at work">
+      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=80" alt="Chef preparing signature dish" loading="lazy">
+      <div class="gallery-item-overlay"><div class="gallery-zoom">+</div></div>
+    </div>
+    <div class="gallery-item reveal" role="listitem" tabindex="0" aria-label="View image: Antipasto">
+      <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=700&q=80" alt="Antipasto arrangement" loading="lazy">
+      <div class="gallery-item-overlay"><div class="gallery-zoom">+</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RESERVATIONS ─── -->
+<section id="reservations" aria-labelledby="reservations-title">
+  <div class="reservations-inner">
+    <p class="section-label reveal">Reserve Your Table</p>
+    <h2 class="section-title reveal" id="reservations-title">Begin Your<br><em>Evening</em></h2>
+    <p class="about-body reveal" style="margin-top:1rem;">
+      We hold each table for 15 minutes. For parties of 8 or more, or private dining enquiries, please call us directly.
+    </p>
+    <form class="form-grid reveal" id="reservation-form" aria-label="Table reservation form" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="res-name">Full Name</label>
+        <input class="form-input" type="text" id="res-name" name="name" placeholder="Your full name" required autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="res-phone">Phone Number</label>
+        <input class="form-input" type="tel" id="res-phone" name="phone" placeholder="+91 — your number" required autocomplete="tel">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="res-email">Email Address</label>
+        <input class="form-input" type="email" id="res-email" name="email" placeholder="your@email.com" required autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="res-guests">Number of Guests</label>
+        <select class="form-select" id="res-guests" name="guests" required>
+          <option value="" disabled selected>Select guests</option>
+          <option value="1">1 Guest</option>
+          <option value="2">2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+          <option value="5">5 Guests</option>
+          <option value="6">6 Guests</option>
+          <option value="7">7 Guests</option>
+          <option value="8">8+ Guests (please call)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="res-date">Preferred Date</label>
+        <input class="form-input" type="date" id="res-date" name="date" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="res-time">Preferred Time</label>
+        <select class="form-select" id="res-time" name="time" required>
+          <option value="" disabled selected>Select a time</option>
+          <option>12:30 PM</option>
+          <option>1:00 PM</option>
+          <option>1:30 PM</option>
+          <option>7:00 PM</option>
+          <option>7:30 PM</option>
+          <option>8:00 PM</option>
+          <option>8:30 PM</option>
+          <option>9:00 PM</option>
+          <option>9:30 PM</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label class="form-label" for="res-occasion">Special Occasion</label>
+        <input class="form-input" type="text" id="res-occasion" name="occasion" placeholder="Birthday, anniversary, proposal… (optional)">
+        <span class="form-note">We will prepare a small complimentary surprise for your occasion.</span>
+      </div>
+      <div class="form-group full">
+        <label class="form-label" for="res-notes">Dietary Requirements or Notes</label>
+        <input class="form-input" type="text" id="res-notes" name="notes" placeholder="Allergies, dietary preferences, special requests…">
+      </div>
+      <div class="form-submit" style="grid-column: span 2;">
+        <button type="submit" class="btn-reserve">Confirm Reservation</button>
+        <p class="form-tel">Or call us: <a href="tel:+912266001998">+91 22 6600 1998</a></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact" aria-labelledby="contact-title">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p class="section-label reveal">Find Us</p>
+      <h2 class="section-title reveal" id="contact-title">Come to<br><em>Our Table</em></h2>
+      <div class="gold-divider reveal" aria-hidden="true"></div>
+      <div class="contact-block reveal">
+        <p class="contact-block-label">Address</p>
+        <p class="contact-block-text">
+          Ristorante Imperiale<br>
+          Level 2, The Taj Mahal Palace<br>
+          Apollo Bunder, Colaba<br>
+          Mumbai — 400 001, Maharashtra
+        </p>
+      </div>
+      <div class="contact-block reveal">
+        <p class="contact-block-label">Reservations</p>
+        <p class="contact-block-text">
+          <a href="tel:+912266001998">+91 22 6600 1998</a><br>
+          <a href="mailto:dine@imperiale.in">dine@imperiale.in</a>
+        </p>
+      </div>
+      <div class="contact-block reveal">
+        <p class="contact-block-label">Dining Hours</p>
+        <div class="hours-row"><span class="day">Monday – Thursday</span><span class="time">7:00 PM – 11:30 PM</span></div>
+        <div class="hours-row"><span class="day">Friday – Saturday</span><span class="time">12:30 PM – 2:30 PM &nbsp;|&nbsp; 7:00 PM – Midnight</span></div>
+        <div class="hours-row"><span class="day">Sunday</span><span class="time">12:30 PM – 3:30 PM &nbsp;|&nbsp; 7:00 PM – 11:00 PM</span></div>
+        <div class="hours-row" style="border:none;"><span class="day" style="color:rgba(244,237,224,0.35);">Monday Lunch</span><span class="time" style="color:rgba(244,237,224,0.3);">Closed</span></div>
+      </div>
+      <div class="contact-block reveal">
+        <p class="contact-block-label">Follow Us</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Instagram">Ig</a>
+          <a href="#" class="social-link" aria-label="Facebook">Fb</a>
+          <a href="#" class="social-link" aria-label="Twitter / X">X</a>
+          <a href="#" class="social-link" aria-label="TripAdvisor">Ta</a>
+        </div>
+      </div>
+    </div>
+    <div class="map-container reveal-right" aria-label="Location map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3774.3059773893387!2d72.83278617513866!3d18.921891882227506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7d1c73a0b2f5d%3A0xa6bfb5aaee7c0b87!2sTaj%20Mahal%20Palace%2C%20Mumbai!5e0!3m2!1sen!2sin!4v1698000000000"
+        title="Ristorante Imperiale location map — Taj Mahal Palace, Mumbai"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <div class="map-overlay" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer role="contentinfo">
+  <div class="footer-top">
+    <div>
+      <p class="footer-brand-name">Ristorante Imperiale</p>
+      <p class="footer-brand-sub">Dal 1998 — Mumbai</p>
+      <p class="footer-brand-desc">
+        A quarter century of Italian culinary tradition, lovingly preserved and offered to those who seek more than a meal — an occasion, a memory, a story to carry home.
+      </p>
+    </div>
+    <div>
+      <p class="footer-col-title">Navigate</p>
+      <ul class="footer-col-links">
+        <li><a href="index.html#about">Our Story</a></li>
+        <li><a href="index.html#menu">The Menu</a></li>
+        <li><a href="index.html#chef">Chef Marco</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="index.html#reservations">Reservations</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Dining</p>
+      <ul class="footer-col-links">
+        <li><a href="#">Tasting Menu</a></li>
+        <li><a href="#">Private Dining</a></li>
+        <li><a href="#">Wine Events</a></li>
+        <li><a href="#">Gift Vouchers</a></li>
+        <li><a href="#">Corporate Events</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Il Bollettino — Newsletter</p>
+      <p style="font-size:0.82rem; color:rgba(244,237,224,0.45); margin-bottom:1rem; line-height:1.7;">
+        Receive seasonal menu previews, wine notes, and invitations to exclusive events.
+      </p>
+      <form class="newsletter-form" id="newsletter-form" aria-label="Newsletter signup">
+        <input
+          class="newsletter-input"
+          type="email"
+          name="nl-email"
+          id="nl-email"
+          placeholder="Your email address"
+          aria-label="Your email address"
+          required
+        >
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2025 Ristorante Imperiale. All rights reserved. Crafted with devotion in Mumbai.</p>
+    <ul class="footer-legal" aria-label="Legal links">
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms of Service</a></li>
+      <li><a href="#">Accessibility</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- ─── LIGHTBOX ─── -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close image viewer">Close &times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- ─── TOAST ─── -->
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ── Navbar scroll ── */
+  const navbar = document.getElementById('navbar');
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > 60) { navbar.classList.add('scrolled'); }
+    else { navbar.classList.remove('scrolled'); }
+    lastScroll = y;
+  }, { passive: true });
+
+  /* ── Mobile menu ── */
+  const burger = document.getElementById('burger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  let menuOpen = false;
+  function toggleMenu(open) {
+    menuOpen = open;
+    mobileMenu.classList.toggle('open', menuOpen);
+    burger.setAttribute('aria-expanded', menuOpen);
+    mobileMenu.setAttribute('aria-hidden', !menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    const spans = burger.querySelectorAll('span');
+    if (menuOpen) {
+      spans[0].style.cssText = 'transform:rotate(45deg) translate(4px,4px)';
+      spans[1].style.cssText = 'opacity:0';
+      spans[2].style.cssText = 'transform:rotate(-45deg) translate(4px,-4px)';
+    } else {
+      spans.forEach(s => s.style.cssText = '');
+    }
+  }
+  burger.addEventListener('click', () => toggleMenu(!menuOpen));
+  mobileMenu.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => toggleMenu(false));
+  });
+
+  /* ── Intersection Observer ── */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => io.observe(el));
+
+  /* ── Menu tabs ── */
+  const tabs = document.querySelectorAll('.menu-tab');
+  const categories = document.querySelectorAll('.menu-category');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      const cat = this.dataset.category;
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      categories.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      this.setAttribute('aria-selected', 'true');
+      const target = document.getElementById(cat);
+      if (target) {
+        target.classList.add('active');
+        target.querySelectorAll('.reveal').forEach(el => {
+          el.classList.remove('visible');
+          setTimeout(() => io.observe(el), 50);
+        });
+      }
+    });
+  });
+
+  /* ── Gallery lightbox ── */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.getElementById('lightbox-close');
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const img = this.querySelector('img');
+      if (!img) return;
+      lightboxImg.src = img.src.replace(/w=\d+/, 'w=1200');
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lightboxClose.focus();
+    });
+    item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') item.click(); });
+  });
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox(); });
+
+  /* ── Toast ── */
+  const toast = document.getElementById('toast');
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4200);
+  }
+
+  /* ── Reservation form ── */
+  const reservationForm = document.getElementById('reservation-form');
+  const dateInput = document.getElementById('res-date');
+  if (dateInput) {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    dateInput.min = yyyy + '-' + mm + '-' + dd;
+    const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1);
+    const d2 = String(tomorrow.getDate()).padStart(2, '0');
+    const m2 = String(tomorrow.getMonth() + 1).padStart(2, '0');
+    const y2 = tomorrow.getFullYear();
+    dateInput.value = y2 + '-' + m2 + '-' + d2;
+  }
+  if (reservationForm) {
+    reservationForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('res-name').value.trim();
+      if (!name) { document.getElementById('res-name').focus(); return; }
+      const btn = this.querySelector('.btn-reserve');
+      btn.textContent = 'Confirming…';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Confirmed ✓';
+        btn.style.background = '#2a5a1a';
+        btn.style.color = '#f4ede0';
+        showToast('Your table has been reserved. We await your arrival.');
+        setTimeout(() => {
+          reservationForm.reset();
+          btn.textContent = 'Confirm Reservation';
+          btn.disabled = false;
+          btn.style.background = '';
+          btn.style.color = '';
+        }, 5000);
+      }, 1800);
+    });
+  }
+
+  /* ── Newsletter form ── */
+  const newsletterForm = document.getElementById('newsletter-form');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('.newsletter-btn');
+      btn.textContent = 'Thank you';
+      btn.disabled = true;
+      showToast('Welcome to Il Bollettino. Grazie mille.');
+      setTimeout(() => { this.reset(); btn.textContent = 'Subscribe'; btn.disabled = false; }, 4000);
+    });
+  }
+
+  /* ── Parallax hero ── */
+  const heroBg = document.querySelector('.hero-bg');
+  if (heroBg) {
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y < window.innerHeight) {
+        heroBg.style.transform = 'scale(1) translateY(' + (y * 0.3) + 'px)';
+      }
+    }, { passive: true });
+  }
+
+  /* ── Smooth scroll for all anchor links ── */
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const offset = 80;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

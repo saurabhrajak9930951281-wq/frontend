@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>404 — Page Not Found | Ristorante Imperiale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { min-height: 100vh; display: flex; flex-direction: column; }
+
+  .err-page {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: 10rem 5vw 6rem;
+  }
+
+  /* Background */
+  .err-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=70');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.18) saturate(0.5);
+    animation: heroZoom 12s ease-out forwards;
+  }
+
+  /* Large ghost number */
+  .err-ghost {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .err-ghost-num {
+    font-family: var(--font-serif);
+    font-size: clamp(30vw, 40vw, 520px);
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(201, 168, 76, 0.06);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .err-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 680px;
+  }
+
+  .err-ornament {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1.2rem; margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.3s;
+  }
+  .err-ornament::before,
+  .err-ornament::after {
+    content: ''; display: block;
+    width: 40px; height: 1px; background: rgba(201, 168, 76, 0.4);
+  }
+  .err-ornament-gem {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  .err-code {
+    font-family: var(--font-serif);
+    font-size: 0.62rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.45s;
+    display: block;
+  }
+
+  .err-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--ivory);
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.6s;
+  }
+  .err-title em {
+    font-style: italic;
+    color: var(--gold);
+    font-family: var(--font-elegant);
+    font-size: 1.1em;
+  }
+
+  .err-divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1rem; margin: 1.8rem auto;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.75s;
+  }
+  .err-divider::before,
+  .err-divider::after {
+    content: ''; display: block;
+    width: 50px; height: 1px; background: rgba(201, 168, 76, 0.35);
+  }
+  .err-divider-dot {
+    width: 5px; height: 5px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  .err-quote {
+    font-family: var(--font-elegant);
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(244, 237, 224, 0.6);
+    line-height: 1.75;
+    margin-bottom: 0.6rem;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.9s;
+  }
+  .err-quote-attr {
+    font-family: var(--font-serif);
+    font-size: 0.6rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(201, 168, 76, 0.6);
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1.05s;
+  }
+
+  .err-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1.2s;
+  }
+
+  /* Suggested links */
+  .err-suggestions {
+    position: relative; z-index: 2;
+    margin-top: 5rem;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 1.2s ease forwards 1.6s;
+  }
+  .err-sugg-label {
+    font-family: var(--font-serif);
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(201, 168, 76, 0.5);
+    margin-bottom: 1.8rem;
+    display: block;
+  }
+  .err-sugg-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    max-width: 700px;
+    margin: 0 auto;
+    border: 1px solid rgba(201, 168, 76, 0.1);
+  }
+  .err-sugg-item {
+    flex: 1;
+    min-width: 140px;
+    padding: 1.4rem 1rem;
+    text-decoration: none;
+    text-align: center;
+    border-right: 1px solid rgba(201, 168, 76, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: background var(--transition-f);
+  }
+  .err-sugg-item:last-child { border-right: none; }
+  .err-sugg-item::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform var(--transition-f);
+  }
+  .err-sugg-item:hover { background: rgba(201, 168, 76, 0.04); }
+  .err-sugg-item:hover::before { transform: scaleX(1); }
+  .err-sugg-icon {
+    font-family: var(--font-elegant);
+    font-size: 1.2rem;
+    color: rgba(201, 168, 76, 0.6);
+    font-style: italic;
+    display: block;
+    margin-bottom: 0.5rem;
+    transition: color var(--transition-f);
+  }
+  .err-sugg-item:hover .err-sugg-icon { color: var(--gold); }
+  .err-sugg-name {
+    font-family: var(--font-serif);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244, 237, 224, 0.5);
+    display: block;
+    transition: color var(--transition-f);
+  }
+  .err-sugg-item:hover .err-sugg-name { color: rgba(244, 237, 224, 0.85); }
+
+  /* Floating particles */
+  .particle {
+    position: absolute;
+    width: 3px; height: 3px;
+    background: rgba(201, 168, 76, 0.3);
+    transform: rotate(45deg);
+    animation: particleDrift linear infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+  @keyframes particleDrift {
+    0%   { transform: rotate(45deg) translateY(0) scale(1); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.3; }
+    100% { transform: rotate(45deg) translateY(-100vh) scale(0.3); opacity: 0; }
+  }
+
+  @media (max-width: 600px) {
+    .err-actions { flex-direction: column; }
+    .err-sugg-grid { flex-direction: column; border: 1px solid rgba(201,168,76,0.1); }
+    .err-sugg-item { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.1); width: 100%; }
+    .err-sugg-item:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─── -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <a href="ristorante-imperiale.html" class="nav-logo">
+    <span class="nav-logo-main">Ristorante Imperiale</span>
+    <span class="nav-logo-sub">Mumbai &middot; Dal 1998</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="ristorante-imperiale.html#about">About</a></li>
+    <li><a href="ristorante-imperiale.html#menu">Menu</a></li>
+    <li><a href="tasting-menu.html">Tasting Menu</a></li>
+    <li><a href="private-dining.html">Private Dining</a></li>
+    <li><a href="ristorante-imperiale.html#contact">Contact</a></li>
+  </ul>
+  <a href="ristorante-imperiale.html#reservations" class="nav-cta">Reserve</a>
+  <button class="nav-burger" id="burger-btn" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div id="mobile-menu" aria-hidden="true">
+  <a href="ristorante-imperiale.html">Home</a>
+  <a href="ristorante-imperiale.html#menu">Menu</a>
+  <a href="tasting-menu.html">Tasting Menu</a>
+  <a href="private-dining.html">Private Dining</a>
+  <a href="ristorante-imperiale.html#contact">Contact</a>
+</div>
+
+<!-- ─── 404 CONTENT ─── -->
+<main class="err-page" role="main" aria-labelledby="err-title">
+  <div class="err-bg" role="img" aria-hidden="true"></div>
+
+  <div class="err-ghost" aria-hidden="true">
+    <span class="err-ghost-num">404</span>
+  </div>
+
+  <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center;">
+    <div class="err-content">
+      <div class="err-ornament" aria-hidden="true">
+        <div class="err-ornament-gem"></div>
+      </div>
+
+      <span class="err-code" aria-label="Error 404">Errore — 404</span>
+
+      <h1 class="err-title" id="err-title">
+        This Table<br>Was <em>Not Reserved</em>
+      </h1>
+
+      <div class="err-divider" aria-hidden="true">
+        <div class="err-divider-dot"></div>
+      </div>
+
+      <p class="err-quote">
+        "Even the finest restaurant has a door that leads nowhere.<br>
+        Allow us to guide you back to where the evening truly begins."
+      </p>
+      <p class="err-quote-attr">— Maître d'hôtel, Ristorante Imperiale</p>
+
+      <div class="err-actions">
+        <a href="ristorante-imperiale.html" class="btn-primary">Return Home</a>
+        <a href="ristorante-imperiale.html#reservations" class="btn-secondary">Reserve a Table</a>
+      </div>
+    </div>
+
+    <div class="err-suggestions">
+      <span class="err-sugg-label">Perhaps you were looking for</span>
+      <nav class="err-sugg-grid" aria-label="Suggested pages">
+        <a href="ristorante-imperiale.html#menu" class="err-sugg-item">
+          <span class="err-sugg-icon">◇</span>
+          <span class="err-sugg-name">Our Menu</span>
+        </a>
+        <a href="tasting-menu.html" class="err-sugg-item">
+          <span class="err-sugg-icon">✦</span>
+          <span class="err-sugg-name">Tasting Menu</span>
+        </a>
+        <a href="private-dining.html" class="err-sugg-item">
+          <span class="err-sugg-icon">♡</span>
+          <span class="err-sugg-name">Private Dining</span>
+        </a>
+        <a href="ristorante-imperiale.html#chef" class="err-sugg-item">
+          <span class="err-sugg-icon">≋</span>
+          <span class="err-sugg-name">Chef Marco</span>
+        </a>
+        <a href="ristorante-imperiale.html#contact" class="err-sugg-item">
+          <span class="err-sugg-icon">∞</span>
+          <span class="err-sugg-name">Contact</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+</main>
+
+<!-- ─── FOOTER MINIMAL ─── -->
+<footer style="background:var(--charcoal); border-top:1px solid rgba(201,168,76,0.1); padding:2rem 5vw;">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+    <p style="font-family:var(--font-elegant); font-size:0.78rem; color:rgba(244,237,224,0.3); font-style:italic;">
+      &copy; 2025 Ristorante Imperiale, Mumbai. All rights reserved.
+    </p>
+    <a href="ristorante-imperiale.html" style="font-family:var(--font-serif); font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); text-decoration:none; opacity:0.7; transition:opacity 0.3s ease;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.7'">
+      ← Return to Imperiale
+    </a>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+<script>
+(function () {
+  /* ── Floating gold particles ── */
+  const page = document.querySelector('.err-page');
+  if (!page) return;
+
+  function spawnParticle() {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 4 + 2;
+    const left = Math.random() * 100;
+    const dur  = Math.random() * 12 + 8;
+    const del  = Math.random() * 5;
+    p.style.cssText = `
+      left: ${left}%;
+      bottom: -10px;
+      width: ${size}px;
+      height: ${size}px;
+      animation-duration: ${dur}s;
+      animation-delay: ${del}s;
+    `;
+    page.appendChild(p);
+    setTimeout(() => p.remove(), (dur + del) * 1000);
+  }
+
+  /* Spawn continuously */
+  for (let i = 0; i < 12; i++) spawnParticle();
+  setInterval(spawnParticle, 1800);
+})();
+</script>
+</body>
+</html>

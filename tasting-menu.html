@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Chef Marco Bellini's eight-course tasting menu — an orchestrated journey from the Alps to Sicily. Ristorante Imperiale, Mumbai.">
+<title>Il Menu Degustazione — Ristorante Imperiale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ─── TASTING MENU PAGE ─── */
+  body { background: var(--black); }
+
+  /* Hero */
+  .tasting-hero {
+    position: relative; height: 75vh; min-height: 580px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .tasting-hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80');
+    background-size: cover; background-position: center 30%;
+    animation: heroZoom 10s ease-out forwards;
+  }
+  .tasting-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(8,8,7,0.45) 0%,
+      rgba(8,8,7,0.7) 70%,
+      rgba(8,8,7,1) 100%
+    );
+  }
+  .tasting-hero-content {
+    position: relative; z-index: 2;
+    text-align: center; padding: 0 5vw;
+    max-width: 860px;
+  }
+  .tasting-hero-ornament {
+    display: flex; align-items: center; justify-content: center; gap: 1.2rem;
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.3s;
+  }
+  .tasting-hero-ornament::before,
+  .tasting-hero-ornament::after {
+    content: ''; display: block;
+    width: 50px; height: 1px; background: rgba(201,168,76,0.5);
+  }
+  .ornament-icon {
+    font-family: var(--font-elegant); font-size: 1.4rem;
+    color: var(--gold); font-style: italic; line-height: 1;
+  }
+  .tasting-hero-eyebrow {
+    font-family: var(--font-elegant); font-size: 0.85rem;
+    letter-spacing: 0.45em; text-transform: uppercase;
+    color: var(--gold); font-style: italic;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.45s;
+    margin-bottom: 0.8rem;
+  }
+  .tasting-hero-title {
+    font-family: var(--font-serif); font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 400; letter-spacing: 0.08em; color: var(--ivory);
+    opacity: 0; animation: fadeUp 1s ease forwards 0.65s;
+    line-height: 1.05;
+  }
+  .tasting-hero-title em {
+    font-style: italic; font-family: var(--font-elegant);
+    color: var(--gold); font-size: 1.12em;
+  }
+  .tasting-hero-tagline {
+    font-family: var(--font-elegant); font-size: clamp(1rem, 1.8vw, 1.2rem);
+    font-weight: 300; font-style: italic;
+    color: rgba(244,237,224,0.7); margin-top: 1.2rem;
+    letter-spacing: 0.04em;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.85s;
+  }
+  .tasting-hero-meta {
+    display: flex; align-items: center; justify-content: center;
+    gap: 3rem; margin-top: 2.5rem;
+    opacity: 0; animation: fadeUp 1s ease forwards 1.05s;
+  }
+  .meta-item { text-align: center; }
+  .meta-num {
+    font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400;
+    color: var(--gold); display: block; line-height: 1;
+  }
+  .meta-label {
+    font-family: var(--font-serif); font-size: 0.58rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(244,237,224,0.5);
+    display: block; margin-top: 0.35rem;
+  }
+  .meta-sep { width: 1px; height: 40px; background: rgba(201,168,76,0.25); }
+
+  /* ── Intro Strip ── */
+  .intro-strip {
+    background: var(--charcoal);
+    padding: 5rem 5vw;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .intro-strip::before {
+    content: ''; position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--gold-dark));
+  }
+  .intro-quote {
+    font-family: var(--font-elegant); font-size: clamp(1.4rem, 2.8vw, 2.1rem);
+    font-weight: 300; font-style: italic; color: var(--ivory);
+    max-width: 820px; margin: 0 auto 1.5rem;
+    line-height: 1.6; letter-spacing: 0.02em;
+  }
+  .intro-quote-attr {
+    font-family: var(--font-serif); font-size: 0.62rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); opacity: 0.8;
+  }
+  .intro-note {
+    margin-top: 2.5rem; display: flex; align-items: center;
+    justify-content: center; gap: 2rem; flex-wrap: wrap;
+  }
+  .intro-pill {
+    font-family: var(--font-serif); font-size: 0.6rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: rgba(244,237,224,0.6);
+    border: 1px solid rgba(201,168,76,0.25); padding: 8px 18px;
+  }
+
+  /* ── Course Timeline ── */
+  #courses {
+    background: var(--black);
+    padding: 7rem 5vw;
+    position: relative;
+  }
+  .courses-header {
+    text-align: center; margin-bottom: 6rem;
+  }
+
+  /* Vertical spine */
+  .course-spine {
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    top: 14rem; bottom: 8rem;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(201,168,76,0.3) 10%,
+      rgba(201,168,76,0.3) 90%,
+      transparent
+    );
+  }
+
+  .course-list { max-width: 1160px; margin: 0 auto; }
+
+  .course-item {
+    display: grid; grid-template-columns: 1fr 60px 1fr;
+    align-items: start; gap: 0;
+    margin-bottom: 5rem;
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.85s ease, transform 0.85s ease;
+  }
+  .course-item.visible { opacity: 1; transform: translateY(0); }
+
+  /* Alternating layout */
+  .course-item:nth-child(even) .course-content { grid-column: 3; grid-row: 1; }
+  .course-item:nth-child(even) .course-node   { grid-column: 2; grid-row: 1; }
+  .course-item:nth-child(even) .course-image  { grid-column: 1; grid-row: 1; }
+
+  .course-item:nth-child(odd) .course-content { grid-column: 1; grid-row: 1; text-align: right; }
+  .course-item:nth-child(odd) .course-node    { grid-column: 2; grid-row: 1; }
+  .course-item:nth-child(odd) .course-image   { grid-column: 3; grid-row: 1; }
+
+  /* Node — center dot */
+  .course-node {
+    display: flex; align-items: flex-start; justify-content: center;
+    padding-top: 1.8rem;
+    position: relative; z-index: 2;
+  }
+  .course-dot {
+    width: 18px; height: 18px;
+    border: 1px solid var(--gold);
+    background: var(--black);
+    transform: rotate(45deg);
+    position: relative; flex-shrink: 0;
+  }
+  .course-dot::after {
+    content: ''; position: absolute; inset: 4px;
+    background: var(--gold);
+    transition: transform 0.4s ease;
+  }
+  .course-item:hover .course-dot::after { transform: rotate(45deg) scale(1.3); }
+
+  /* Content */
+  .course-content { padding: 0 2.5rem; }
+  .course-num {
+    font-family: var(--font-serif); font-size: 0.58rem; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--gold); opacity: 0.7;
+    margin-bottom: 0.6rem; display: block;
+  }
+  .course-label {
+    font-family: var(--font-serif); font-size: 0.6rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: rgba(244,237,224,0.4);
+    margin-bottom: 0.5rem; display: block;
+  }
+  .course-dish-name {
+    font-family: var(--font-elegant); font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+    font-weight: 500; color: var(--ivory); letter-spacing: 0.02em;
+    line-height: 1.25; margin-bottom: 0.6rem;
+  }
+  .course-region {
+    font-family: var(--font-serif); font-size: 0.58rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--gold); opacity: 0.7;
+    margin-bottom: 0.9rem; display: block;
+  }
+  .course-desc {
+    font-size: 0.87rem; color: rgba(244,237,224,0.55);
+    font-style: italic; line-height: 1.85;
+    font-family: var(--font-elegant); font-weight: 300;
+  }
+  .course-wine-pair {
+    margin-top: 1rem; padding: 0.8rem 1rem;
+    border-left: 2px solid rgba(201,168,76,0.4);
+    background: rgba(201,168,76,0.04);
+  }
+  .course-item:nth-child(even) .course-wine-pair { border-left: none; border-right: 2px solid rgba(201,168,76,0.4); }
+  .course-wine-label {
+    font-family: var(--font-serif); font-size: 0.55rem; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; display: block;
+  }
+  .course-wine-name {
+    font-family: var(--font-elegant); font-size: 0.85rem; font-style: italic;
+    color: rgba(244,237,224,0.6);
+  }
+
+  /* Image */
+  .course-image {
+    aspect-ratio: 4/3; overflow: hidden;
+  }
+  .course-image img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(0.82) saturate(0.9);
+    transition: transform 0.9s var(--ease-out), filter 0.5s ease;
+  }
+  .course-item:hover .course-image img {
+    transform: scale(1.05);
+    filter: brightness(0.95) saturate(1);
+  }
+
+  /* ── Palate Cleanser ── */
+  .palate-break {
+    max-width: 1160px; margin: -1rem auto 4rem;
+    padding: 2rem 3rem;
+    display: flex; align-items: center; gap: 2rem;
+    border-top: 1px solid rgba(201,168,76,0.12);
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+  }
+  .palate-gem {
+    width: 12px; height: 12px; background: var(--gold);
+    transform: rotate(45deg); flex-shrink: 0;
+  }
+  .palate-text {
+    font-family: var(--font-elegant); font-size: 1rem;
+    font-style: italic; color: rgba(244,237,224,0.45);
+  }
+  .palate-text strong {
+    color: rgba(201,168,76,0.7); font-weight: 400;
+  }
+
+  /* ── Pricing Block ── */
+  #pricing {
+    background: var(--charcoal);
+    padding: 7rem 5vw;
+  }
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; max-width: 1000px; margin: 4rem auto 0;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+  .pricing-card {
+    background: var(--charcoal);
+    padding: 3rem 2.5rem;
+    text-align: center;
+    position: relative;
+    transition: background var(--transition-f);
+  }
+  .pricing-card:hover { background: var(--mid); }
+  .pricing-card.featured {
+    background: var(--mid);
+    border-top: 2px solid var(--gold);
+    margin-top: -1px;
+  }
+  .pricing-badge {
+    position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-serif); font-size: 0.55rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--black); background: var(--gold);
+    padding: 4px 14px; white-space: nowrap;
+  }
+  .pricing-plan {
+    font-family: var(--font-serif); font-size: 0.65rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+  }
+  .pricing-price {
+    font-family: var(--font-elegant); font-size: 3rem; font-weight: 300;
+    color: var(--ivory); line-height: 1; margin-bottom: 0.3rem;
+  }
+  .pricing-price span {
+    font-family: var(--font-serif); font-size: 1rem; font-weight: 400;
+    vertical-align: super; margin-right: 4px;
+  }
+  .pricing-per {
+    font-family: var(--font-elegant); font-size: 0.85rem;
+    color: rgba(244,237,224,0.4); font-style: italic; margin-bottom: 2rem;
+  }
+  .pricing-features { list-style: none; margin-bottom: 2.5rem; }
+  .pricing-features li {
+    font-size: 0.82rem; color: rgba(244,237,224,0.6);
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+    font-family: var(--font-elegant); font-style: italic;
+  }
+  .pricing-features li:last-child { border-bottom: none; }
+
+  /* ── Wine Pairing Section ── */
+  #wine-pairing {
+    background: var(--black);
+    padding: 7rem 5vw;
+  }
+  .wine-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; max-width: 1100px; margin: 4rem auto 0;
+    align-items: start;
+  }
+  .wine-image {
+    position: relative; overflow: hidden; aspect-ratio: 3/4;
+  }
+  .wine-image img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(0.8) saturate(0.85);
+    transition: transform 0.8s ease, filter 0.5s ease;
+  }
+  .wine-image:hover img { transform: scale(1.04); filter: brightness(0.95) saturate(1); }
+  .wine-image-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1.5rem; background: linear-gradient(to top, rgba(8,8,7,0.85), transparent);
+    font-family: var(--font-elegant); font-style: italic;
+    font-size: 0.85rem; color: rgba(244,237,224,0.7);
+  }
+  .wine-list { padding: 1rem 0; }
+  .wine-item {
+    padding: 1.6rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    transition: padding var(--transition-f);
+  }
+  .wine-item:hover { padding-left: 0.75rem; }
+  .wine-item-top {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 1rem; margin-bottom: 0.35rem;
+  }
+  .wine-item-name {
+    font-family: var(--font-elegant); font-size: 1.05rem;
+    font-weight: 500; color: var(--ivory);
+  }
+  .wine-item-price {
+    font-family: var(--font-serif); font-size: 0.8rem;
+    color: var(--gold); white-space: nowrap; padding-top: 2px;
+  }
+  .wine-item-desc {
+    font-size: 0.82rem; color: rgba(244,237,224,0.5);
+    font-style: italic; font-family: var(--font-elegant);
+    font-weight: 300;
+  }
+  .wine-item-pair {
+    font-family: var(--font-serif); font-size: 0.55rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); opacity: 0.6; margin-top: 0.4rem; display: block;
+  }
+
+  /* ── Reservations CTA ── */
+  #tasting-reserve {
+    background: var(--charcoal);
+    padding: 7rem 5vw;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  #tasting-reserve::before {
+    content: 'DEGUSTAZIONE';
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-serif); font-size: 15vw; font-weight: 700;
+    color: rgba(201,168,76,0.03); white-space: nowrap; pointer-events: none;
+    letter-spacing: 0.08em;
+  }
+  .reserve-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+  .reserve-inner .section-label { justify-content: center; }
+  .reserve-inner .section-label::before { display: none; }
+  .reserve-text {
+    font-family: var(--font-elegant); font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 300; color: rgba(244,237,224,0.6); font-style: italic;
+    line-height: 1.8; margin-top: 1.5rem; margin-bottom: 3rem;
+  }
+  .reserve-actions {
+    display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .course-spine { display: none; }
+    .course-item {
+      display: flex; flex-direction: column; gap: 1.5rem;
+    }
+    .course-item:nth-child(even) .course-content,
+    .course-item:nth-child(odd) .course-content { grid-column: unset; text-align: left; }
+    .course-content { padding: 0; }
+    .course-image { order: -1; aspect-ratio: 16/9; }
+    .course-node { display: none; }
+    .palate-break { flex-direction: column; text-align: center; padding: 1.5rem; }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+    .wine-grid { grid-template-columns: 1fr; gap: 3rem; }
+  }
+  @media (max-width: 600px) {
+    .tasting-hero-meta { gap: 1.5rem; }
+    .meta-num { font-size: 1.4rem; }
+    .meta-sep { height: 28px; }
+    .intro-pill { font-size: 0.55rem; padding: 6px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─── -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <a href="ristorante-imperiale.html" class="nav-logo" aria-label="Ristorante Imperiale — Home">
+    <span class="nav-logo-main">Ristorante Imperiale</span>
+    <span class="nav-logo-sub">Mumbai &middot; Dal 1998</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="ristorante-imperiale.html#about">About</a></li>
+    <li><a href="ristorante-imperiale.html#menu">Menu</a></li>
+    <li><a href="tasting-menu.html" class="active">Tasting Menu</a></li>
+    <li><a href="private-dining.html">Private Dining</a></li>
+    <li><a href="ristorante-imperiale.html#contact">Contact</a></li>
+  </ul>
+  <a href="ristorante-imperiale.html#reservations" class="nav-cta">Reserve</a>
+  <button class="nav-burger" id="burger-btn" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" aria-hidden="true">
+  <a href="ristorante-imperiale.html#about">About</a>
+  <a href="ristorante-imperiale.html#menu">À La Carte</a>
+  <a href="tasting-menu.html">Tasting Menu</a>
+  <a href="private-dining.html">Private Dining</a>
+  <a href="ristorante-imperiale.html#reservations">Reservations</a>
+  <a href="ristorante-imperiale.html#contact">Contact</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section class="tasting-hero" aria-label="Tasting Menu hero">
+  <div class="tasting-hero-bg" role="img" aria-label="Fine dining tasting menu preparation"></div>
+  <div class="tasting-hero-overlay"></div>
+  <div class="tasting-hero-content">
+    <div class="tasting-hero-ornament" aria-hidden="true">
+      <span class="ornament-icon">✦</span>
+    </div>
+    <p class="tasting-hero-eyebrow">Chef Marco Bellini Presents</p>
+    <h1 class="tasting-hero-title">Il Menu<br><em>Degustazione</em></h1>
+    <p class="tasting-hero-tagline">
+      An orchestrated journey — eight courses, eight regions,<br>the full breadth of the Italian peninsula.
+    </p>
+    <div class="tasting-hero-meta" aria-label="Tasting menu details">
+      <div class="meta-item">
+        <span class="meta-num">8</span>
+        <span class="meta-label">Courses</span>
+      </div>
+      <div class="meta-sep" aria-hidden="true"></div>
+      <div class="meta-item">
+        <span class="meta-num">3.5</span>
+        <span class="meta-label">Hours</span>
+      </div>
+      <div class="meta-sep" aria-hidden="true"></div>
+      <div class="meta-item">
+        <span class="meta-num">₹9,800</span>
+        <span class="meta-label">Per Person</span>
+      </div>
+      <div class="meta-sep" aria-hidden="true"></div>
+      <div class="meta-item">
+        <span class="meta-num">Fri–Sun</span>
+        <span class="meta-label">Availability</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INTRO ─── -->
+<div class="intro-strip" aria-labelledby="intro-quote">
+  <blockquote class="intro-quote reveal" id="intro-quote">
+    "Every course is a chapter. Together they tell the story of Italy — its soul, its seasons, its centuries of delicious stubbornness."
+  </blockquote>
+  <p class="intro-quote-attr reveal">— Chef Marco Bellini</p>
+  <div class="intro-note reveal">
+    <span class="intro-pill">Vegetarian Adaptation Available</span>
+    <span class="intro-pill">Wine Pairing +₹5,500</span>
+    <span class="intro-pill">Non-Alcoholic Pairing +₹2,800</span>
+    <span class="intro-pill">Minimum 2 Guests</span>
+  </div>
+</div>
+
+<!-- ─── COURSES ─── -->
+<section id="courses" aria-labelledby="courses-title">
+  <div class="courses-header">
+    <p class="section-label center reveal">The Journey</p>
+    <h2 class="section-title reveal" id="courses-title">Eight Chapters of <em>Italia</em></h2>
+  </div>
+
+  <div class="course-spine" aria-hidden="true"></div>
+  <div class="course-list">
+
+    <!-- COURSE 01 -->
+    <article class="course-item" aria-label="Course 1: Benvenuto">
+      <div class="course-content">
+        <span class="course-num">01</span>
+        <span class="course-label">Benvenuto — Welcome</span>
+        <h3 class="course-dish-name">Amuse-Bouche della Tradizione</h3>
+        <span class="course-region">Emilia-Romagna &amp; Piemonte</span>
+        <p class="course-desc">
+          Three miniature bites — a Parmigiano Reggiano frico cup filled with 36-month prosciutto mousse; a Barolo-braised beef cromesqui; and a wafer of lardo di Colonnata draped over warm focaccina. An overture of the evening.
+        </p>
+      </div>
+      <div class="course-node" aria-hidden="true"><div class="course-dot"></div></div>
+      <div class="course-image">
+        <img
+          src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=700&q=80"
+          alt="Amuse-bouche — three elegant bites on dark slate"
+          loading="lazy"
+        >
+      </div>
+    </article>
+
+    <!-- COURSE 02 -->
+    <article class="course-item" aria-label="Course 2: Carpaccio di Wagyu">
+      <div class="course-content">
+        <span class="course-num">02</span>
+        <span class="course-label">Antipasto</span>
+        <h3 class="course-dish-name">Carpaccio di Wagyu,<br>Tartufo Bianco d'Alba</h3>
+        <span class="course-region">Piemonte</span>
+        <p class="course-desc">
+          Paper-thin sheets of A5 wagyu tenderloin, shaved Alban white truffle, green apple slivers, aged Aceto Balsamico Tradizionale di Modena DOP 25 years, mustard gelée, edible gold.
+        </p>
+        <div class="course-wine-pair">
+          <span class="course-wine-label">Wine Pairing</span>
+          <span class="course-wine-name">Barolo Chinato Cocchi — Piedmont, NV</span>
+        </div>
+      </div>
+      <div class="course-node" aria-hidden="true"><div class="course-dot"></div></div>
+      <div class="course-image">
+        <img
+          src="https://images.unsplash.com/photo-1544025162-d76694265947?w=700&q=80"
+          alt="Carpaccio di Wagyu with truffle shavings"
+          loading="lazy"
+        >
+      </div>
+    </article>
+
+    <!-- PALATE BREAK 1 -->
+    <div class="palate-break reveal" role="note" aria-label="Palate cleanser note">
+      <div class="palate-gem" aria-hidden="true"></div>
+      <p class="palate-text"><strong>Sorbet di Limone Amalfitano</strong> — a pause between the land and the sea. Cold, bright, necessary.</p>
+    </div>
+
+    <!-- COURSE 03 -->
+    <article class="course-item" aria-label="Course 3: Risotto al Tartufo">
+      <div class="course-content">
+        <span class="course-num">03</span>
+        <span class="course-label">Primo</span>
+        <h3 class="course-dish-name">Risotto Mantecato al<br>Tartufo Nero di Norcia</h3>
+        <span class="course-region">Umbria</span>
+        <p class="course-desc">
+          Carnaroli riserva, lightly toasted in dry white wine, finished with 48-month Parmigiano and unsalted Isigny butter. Shaved fresh Norcia black truffle tableside. The dish that made Chef Bellini's reputation.
+        </p>
+        <div class="course-wine-pair">
+          <span class="course-wine-label">Wine Pairing</span>
+          <span class="course-wine-name">Sagrantino di Montefalco 2017 — Arnaldo-Caprai</span>
+        </div>
+      </div>
+      <div class="course-node" aria-hidden="true"><div class="course-dot"></div></div>
+      <div class="course-image">
+        <img
+          src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=700&q=80"
+          alt="Black truffle risotto in a white bowl"
+          loading="lazy"
+        >
+      </div>
+    </article>
+
+    <!-- COURSE 04 -->
+    <article class="course-item" aria-label="Course 4: Tagliolini al Caviale">
+      <div class="course-content">
+        <span class="course-num">04</span>
+        <span class="course-label">Pasta</span>
+        <h3 class="course-dish-name">Tagliolini al Caviale<br>Oscietra &amp; Champagne</h3>
+        <span class="course-region">Veneto / The Caspian</span>
+        <p class="course-desc">
+          Hand-rolled 00 flour tagliolini, simmered in champagne-butter, finished with sour cream, preserved lemon zest, chives, and a generous tableside crown of Oscietra Imperial caviar (30g per portion).
+        </p>
+        <div class="course-wine-pair">
+          <span class="course-wine-label">Wine Pairing</span>
+          <span class="course-wine-name">Franciacorta Dosage Zéro Riserva 2018 — Ca' del Bosco</span>
+        </div>
+      </div>
+      <div class="course-node" aria-hidden="true"><div class="course-dot"></div></div>
+      <div class="course-image">
+        <img
+          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80"
+          alt="Tagliolini with Oscietra caviar"
+          loading="lazy"
+        >
+      </div>
+    </article>
+
+    <!-- PALATE BREAK 2 -->
+    <div class="palate-break reveal" role="note" aria-label="Second palate cleanser">
+      <div class="palate-gem" aria-hidden="true"></div>
+      <p class="palate-text"><strong>Granita di Sicilia al Gelsomino</strong> — jasmine ice, a whisper of Marsala, hand-candied cedro peel. The south interrupts the north, as it always does.</p>
+    </div>
+
+    <!-- COURSE 05 -->
+    <article class="course-item" aria-label="Course 5: Branzino">
+      <div class="course-content">
+        <span class="course-num">05</span>
+        <span class="course-label">Secondo di Mare</span>
+        <h3 class="course-dish-name">Branzino alla Ligure,<br>Olive Taggiasche &amp; Pinoli</h3>
+        <span class="course-region">Liguria</span>
+        <p class="course-desc">
+          Wild-caught European sea bass, scaled and roasted en papillote with Ligurian Taggiasca olives, toasted pine nuts, cherry tomatoes, fresh oregano, and Ligurian DOP olive oil. Served with a saffron-potato crisp.
+        </p>
+        <div class="course-wine-pair">
+          <span class="course-wine-label">Wine Pairing</span>
+          <span class="course-wine-name">Vermentino di Sardegna Superiore 2021 — Sella &amp; Mosca</span>
+        </div>
+      </div>
+      <div class="course-node" aria-hidden="true"><div class="course-dot"></div></div>
+      <div class="course-image">
+        <img
+          src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=700&q=80"
+          alt="Sea bass prepared Ligurian style"
+          loading="lazy"
+        >
+      </div>
+    </article>
+
+    <!-- COURSE 06 -->
+    <article class="course-item" aria-label="Course 6: Lombo di Vitello">
+      <div class="course-content">
+        <span class="course-num">06</span>
+        <span class="course-label">Secondo di Carne</span>
+        <h3 class="course-dish-name">Lombo di Vitello alla<br>Valdostana, Fonduta di Fontina</h3>
+        <span class="course-region">Valle d'Aosta</span>
+        <p class="course-desc">
+          Rose veal loin, sous-vide 52°C for four hours, seared over beechwood, rested and crowned with warm Fontina Val d'Aosta fonduta. Wild mushroom sauté, black truffle jus, crispy sweetbread. The mountain in every bite.
+        </p>
+        <div class="course-wine-pair">
+          <span class="course-wine-label">Wine Pairing</span>
+          <span class="course-wine-name">Barolo DOCG 2017 — Giacomo Conterno "Cascina Francia"</span>
+        </div>
+      </div>
+      <div class="course-node" aria-hidden="true"><div class="course-dot"></div></div>
+      <div class="course-image">
+        <img
+          src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80"
+          alt="Veal loin with Fontina fonduta"
+          loading="lazy"
+        >
+      </div>
+    </article>
+
+    <!-- COURSE 07 -->
+    <article class="course-item" aria-label="Course 7: Formaggi">
+      <div class="course-content">
+        <span class="course-num">07</span>
+        <span class="course-label">Formaggi d'Italia</span>
+        <h3 class="course-dish-name">Selezione di Formaggi<br>Affinati del Carrello</h3>
+        <span class="course-region">All Italy</span>
+        <p class="course-desc">
+          The cheese trolley arrives — a rotating selection of five to seven Italian artisan cheeses: from Gorgonzola Naturale to Pecorino di Pienza to aged Grana Padano Riserva. Accompanied by chestnut honey, mostarda di Cremona, and grissini torinesi.
+        </p>
+        <div class="course-wine-pair">
+          <span class="course-wine-label">Wine Pairing</span>
+          <span class="course-wine-name">Passito di Pantelleria "Ben Ryé" 2020 — Donnafugata</span>
+        </div>
+      </div>
+      <div class="course-node" aria-hidden="true"><div class="course-dot"></div></div>
+      <div class="course-image">
+        <img
+          src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=700&q=80"
+          alt="Italian cheese trolley selection"
+          loading="lazy"
+        >
+      </div>
+    </article>
+
+    <!-- COURSE 08 -->
+    <article class="course-item" aria-label="Course 8: Dessert">
+      <div class="course-content">
+        <span class="course-num">08</span>
+        <span class="course-label">Dolce Finale</span>
+        <h3 class="course-dish-name">Soufflé al Cioccolato<br>Valrhona, Gelato al Fior di Sale</h3>
+        <span class="course-region">Sicily / Sorrento</span>
+        <p class="course-desc">
+          A 70% Guanaja dark chocolate soufflé, baked precisely eight minutes, served at the table the instant it is ready. Alongside: a quenelle of house-churned Fleur de Sel gelato, preserved Amalfi lemon curd, and a scattering of Bronte pistachio praline.
+        </p>
+        <div class="course-wine-pair">
+          <span class="course-wine-label">Wine Pairing</span>
+          <span class="course-wine-name">Marsala Superiore Riserva "Marco De Bartoli" — Florio, 10yr</span>
+        </div>
+      </div>
+      <div class="course-node" aria-hidden="true"><div class="course-dot"></div></div>
+      <div class="course-image">
+        <img
+          src="https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=700&q=80"
+          alt="Dark chocolate soufflé with sea salt gelato"
+          loading="lazy"
+        >
+      </div>
+    </article>
+
+    <!-- MIGNARDISES -->
+    <div class="palate-break reveal" role="note" aria-label="Closing note">
+      <div class="palate-gem" aria-hidden="true"></div>
+      <p class="palate-text"><strong>Piccola Pasticceria &amp; Caffè</strong> — the journey closes with housemade petit fours, a single espresso ristretto from our Neapolitan blend, and — should you wish — a glass of aged Grappa di Monovitigno.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section id="pricing" aria-labelledby="pricing-title">
+  <div style="text-align:center;">
+    <p class="section-label center reveal">Il Prezzo</p>
+    <h2 class="section-title reveal" id="pricing-title">Choose Your <em>Experience</em></h2>
+  </div>
+  <div class="pricing-grid reveal" role="list">
+    <div class="pricing-card" role="listitem">
+      <p class="pricing-plan">Menu Solo</p>
+      <p class="pricing-price"><span>₹</span>9,800</p>
+      <p class="pricing-per">per person</p>
+      <ul class="pricing-features">
+        <li>All 8 Courses</li>
+        <li>Amuse-Bouche &amp; Mignardises</li>
+        <li>Still &amp; Sparkling Water</li>
+        <li>Espresso or Tea</li>
+        <li>Service &amp; Covers</li>
+      </ul>
+      <a href="ristorante-imperiale.html#reservations" class="btn-ghost">Reserve</a>
+    </div>
+    <div class="pricing-card featured" role="listitem">
+      <span class="pricing-badge">Most Chosen</span>
+      <p class="pricing-plan">Menu con Abbinamento</p>
+      <p class="pricing-price"><span>₹</span>15,300</p>
+      <p class="pricing-per">per person</p>
+      <ul class="pricing-features">
+        <li>All 8 Courses</li>
+        <li>Curated Wine Pairing (7 pours)</li>
+        <li>Amuse-Bouche &amp; Mignardises</li>
+        <li>Still &amp; Sparkling Water</li>
+        <li>Grappa or Digestivo</li>
+        <li>Service &amp; Covers</li>
+      </ul>
+      <a href="ristorante-imperiale.html#reservations" class="btn-primary">Reserve</a>
+    </div>
+    <div class="pricing-card" role="listitem">
+      <p class="pricing-plan">Analcolico Abbinamento</p>
+      <p class="pricing-price"><span>₹</span>12,600</p>
+      <p class="pricing-per">per person</p>
+      <ul class="pricing-features">
+        <li>All 8 Courses</li>
+        <li>Artisan Non-Alcoholic Pairings</li>
+        <li>Amuse-Bouche &amp; Mignardises</li>
+        <li>Still &amp; Sparkling Water</li>
+        <li>Botanical Digestivo</li>
+        <li>Service &amp; Covers</li>
+      </ul>
+      <a href="ristorante-imperiale.html#reservations" class="btn-ghost">Reserve</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RESERVE CTA ─── -->
+<section id="tasting-reserve" aria-labelledby="reserve-cta-title">
+  <div class="reserve-inner">
+    <p class="section-label reveal">Book Your Evening</p>
+    <h2 class="section-title reveal" id="reserve-cta-title">Begin the<br><em>Journey</em></h2>
+    <p class="reserve-text reveal">
+      The tasting menu is offered Friday through Sunday, from 7:00 PM. We seat two turns — 7:00 PM and 9:30 PM. Due to its nature, the full table must experience the menu together. Advance reservation is required; we recommend booking at least 5 days ahead.
+    </p>
+    <div class="reserve-actions reveal">
+      <a href="ristorante-imperiale.html#reservations" class="btn-primary">Reserve Online</a>
+      <a href="tel:+912266001998" class="btn-secondary">Call +91 22 6600 1998</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer role="contentinfo">
+  <div class="footer-top">
+    <div>
+      <p class="footer-brand-name">Ristorante Imperiale</p>
+      <p class="footer-brand-sub">Dal 1998 — Mumbai</p>
+      <p class="footer-brand-desc">
+        Quarter century of Italian culinary tradition, lovingly preserved and offered to those who seek more than a meal.
+      </p>
+    </div>
+    <div>
+      <p class="footer-col-title">Dining</p>
+      <ul class="footer-col-links">
+        <li><a href="ristorante-imperiale.html#menu">À La Carte</a></li>
+        <li><a href="tasting-menu.html">Tasting Menu</a></li>
+        <li><a href="private-dining.html">Private Dining</a></li>
+        <li><a href="ristorante-imperiale.html#reservations">Reservations</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">About</p>
+      <ul class="footer-col-links">
+        <li><a href="ristorante-imperiale.html#about">Our Story</a></li>
+        <li><a href="ristorante-imperiale.html#chef">Chef Marco</a></li>
+        <li><a href="ristorante-imperiale.html#gallery">Gallery</a></li>
+        <li><a href="ristorante-imperiale.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Newsletter</p>
+      <p style="font-size:0.82rem; color:rgba(244,237,224,0.45); margin-bottom:1rem; line-height:1.7;">
+        Seasonal menus, wine notes &amp; exclusive event invitations.
+      </p>
+      <form class="newsletter-form" id="newsletter-form" aria-label="Newsletter">
+        <input class="newsletter-input" type="email" placeholder="Your email address" required aria-label="Email address">
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2025 Ristorante Imperiale. All rights reserved.</p>
+    <ul class="footer-legal">
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="ristorante-imperiale.html">Home</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- ─── LIGHTBOX ─── -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">Close &times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
